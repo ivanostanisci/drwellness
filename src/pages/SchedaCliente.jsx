@@ -87,7 +87,7 @@ export default function SchedaCliente() {
   async function generaPiano() {
     setGenerando(true)
     // Salviamo anamnesi e antropometrica
-    await supabase.from("clienti").update({ anamnesi, antropometrica }).eq("id", id)
+    await supabase.from("clienti").update({ anamnesi: anamnesi, antropometrica: antropo }).eq("id", id)
     try {
       const prompt = "Sei un nutrizionista esperto. Genera un piano alimentare completo per: " + cliente.nome + " " + cliente.cognome + ", Peso: " + antropo.peso + "kg, Altezza: " + antropo.altezza + "cm, Obiettivo: " + cliente.obiettivo + ", Attivita: " + anamnesi.attivita + ", Patologie: " + (anamnesi.patologie||"nessuna") + ", Intolleranze: " + (anamnesi.intolleranze||"nessuna") + ". Includi: 1) TDEE e macros 2) Piano 7 giorni 3) Lista spesa 4) Consigli personalizzati"
       const res = await fetch("/api/genera-piano", {
