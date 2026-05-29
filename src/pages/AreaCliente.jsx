@@ -10,12 +10,14 @@ export default function AreaCliente() {
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState("")
 
+  const [codice, setCodice] = useState("")
+
   async function accedi() {
     setLoading(true)
     setMsg("")
-    const { data, error } = await supabase.from("clienti").select("*").eq("email", email.toLowerCase()).single()
+    const { data, error } = await supabase.from("clienti").select("*").eq("email", email.toLowerCase()).eq("codice_accesso", codice.toUpperCase()).single()
     if (error || !data) {
-      setMsg("Email non trovata. Contatta il tuo PT.")
+      setMsg("Email o codice non validi. Contatta il tuo PT.")
     } else {
       setCliente(data)
       setStep("area")

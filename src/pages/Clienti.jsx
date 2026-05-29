@@ -29,11 +29,12 @@ export default function Clienti() {
   async function salvaCliente(e) {
     e.preventDefault()
     setSaving(true)
-    const { error } = await supabase.from('clienti').insert([form])
+    const codice = 'DRW' + Math.floor(1000 + Math.random() * 9000)
+    const { error } = await supabase.from('clienti').insert([{...form, codice_accesso: codice}])
     if (error) {
       setMsg('Errore: ' + error.message)
     } else {
-      setMsg('Cliente aggiunto!')
+      setMsg('Cliente aggiunto! Codice accesso: ' + 'DRW' + Math.floor(1000 + Math.random() * 9000))
       setShowModal(false)
       setForm({ nome:'', cognome:'', email:'', telefono:'', peso_iniziale:'', altezza:'', obiettivo:'dimagrimento', calorie_target:'', note:'' })
       fetchClienti()
