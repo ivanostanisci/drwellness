@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { supabase } from '../lib/supabase'
-
 export default function Clienti() {
   const navigate = useNavigate()
   const [clienti, setClienti] = useState([])
