@@ -106,6 +106,9 @@ export default function SchedaCliente() {
           <div style={{fontSize:"11px",color:"var(--t2)",marginTop:"2px"}}>{cliente.email} · <span style={{textTransform:"capitalize"}}>{cliente.obiettivo}</span></div>
         </div>
         <span className="pill p-ok">Attivo</span>
+        <button onClick={()=>{navigator.clipboard.writeText('https://drwellness-q4c5.vercel.app/area-cliente');setMsg('Link copiato! Invialo al cliente via WhatsApp o email')}} style={{background:'rgba(201,168,76,0.12)',border:'.5px solid rgba(201,168,76,0.25)',color:'#C9A84C',borderRadius:'7px',padding:'7px 12px',fontSize:'12px',cursor:'pointer',display:'flex',alignItems:'center',gap:'5px'}}>
+          <i className="ti ti-link"></i> Copia link cliente
+        </button>
       </div>
 
       <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"10px",marginBottom:"1.25rem"}}>
