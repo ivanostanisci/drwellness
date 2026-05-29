@@ -14,6 +14,8 @@ export default function SchedaCliente() {
   const [tab, setTab] = useState("anagrafica")
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState("")
+  const [editing, setEditing] = useState(false)
+  const [editForm, setEditForm] = useState({})
   const [generando, setGenerando] = useState(false)
   const [pianoAI, setPianoAI] = useState("")
 
@@ -62,6 +64,16 @@ export default function SchedaCliente() {
     return grasso.toFixed(1)
   }
 
+  async function salvaModifiche() {
+    setSaving(true)
+    await supabase.from("clienti").update(editForm).eq("id", id)
+    setEditing(false)
+    fetchDati()
+    setMsg("Cliente aggiornato!")
+    setSaving(false)
+    setTimeout(() => setMsg(""), 3000)
+  }
+
   async function salvaMisurazione() {
     setSaving(true)
     await supabase.from("misurazioni").insert([{ ...nuovaMis, cliente_id: id }])
@@ -106,6 +118,9 @@ export default function SchedaCliente() {
           <div style={{fontSize:"11px",color:"var(--t2)",marginTop:"2px"}}>{cliente.email} · <span style={{textTransform:"capitalize"}}>{cliente.obiettivo}</span></div>
         </div>
         <span className="pill p-ok">Attivo</span>
+        <button onClick={()=>{setEditing(true);setEditForm(cliente)}} style={{background:'rgba(201,168,76,0.12)',border:'.5px solid rgba(201,168,76,0.25)',color:'#C9A84C',borderRadius:'7px',padding:'7px 12px',fontSize:'12px',cursor:'pointer',display:'flex',alignItems:'center',gap:'5px'}}>
+          <i className="ti ti-edit"></i> Modifica
+        </button>
         <button onClick={()=>{navigator.clipboard.writeText('https://drwellness-q4c5.vercel.app/area-cliente');setMsg('Link copiato! Invialo al cliente via WhatsApp o email')}} style={{background:'rgba(201,168,76,0.12)',border:'.5px solid rgba(201,168,76,0.25)',color:'#C9A84C',borderRadius:'7px',padding:'7px 12px',fontSize:'12px',cursor:'pointer',display:'flex',alignItems:'center',gap:'5px'}}>
           <i className="ti ti-link"></i> Copia link cliente
         </button>
@@ -117,6 +132,42 @@ export default function SchedaCliente() {
         <div className="stat-card"><div className="stat-icon"><i className="ti ti-chart-bar"></i></div><div className="stat-label">BMI</div><div className="stat-val">{calcolaBMI()} <span style={{fontSize:"11px",color:"var(--t2)"}}>{classificaBMI()}</span></div></div>
         <div className="stat-card"><div className="stat-icon"><i className="ti ti-percentage"></i></div><div className="stat-label">Massa grassa</div><div className="stat-val">{calcolaPercentualeGrasso()} <span style={{fontSize:"12px"}}>%</span></div></div>
       </div>
+
+      {editing && (
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.8)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:100}} onClick={e=>e.target===e.currentTarget&&setEditing(false)}>
+          <div style={{background:"var(--card)",border:".5px solid var(--gold-b)",borderRadius:"14px",width:"520px",maxHeight:"85vh",overflowY:"auto"}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"1rem 1.25rem",borderBottom:".5px solid var(--bord)"}}>
+              <div style={{fontSize:"17px",fontWeight:600,color:"var(--t1)"}}>Modifica cliente</div>
+              <button onClick={()=>setEditing(false)} style={{background:"transparent",border:"none",color:"var(--t2)",fontSize:"20px",cursor:"pointer"}}>✕</button>
+            </div>
+            <div style={{padding:"1.25rem"}}>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px",marginBottom:"10px"}}>
+                <div><label className="flabel">Nome</label><input className="finput" value={editForm.nome||""} onChange={e=>setEditForm({...editForm,nome:e.target.value})} /></div>
+                <div><label className="flabel">Cognome</label><input className="finput" value={editForm.cognome||""} onChange={e=>setEditForm({...editForm,cognome:e.target.value})} /></div>
+              </div>
+              <div style={{marginBottom:"10px"}}><label className="flabel">Email</label><input className="finput" value={editForm.email||""} onChange={e=>setEditForm({...editForm,email:e.target.value})} /></div>
+              <div style={{marginBottom:"10px"}}><label className="flabel">Telefono</label><input className="finput" value={editForm.telefono||""} onChange={e=>setEditForm({...editForm,telefono:e.target.value})} /></div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"10px",marginBottom:"10px"}}>
+                <div><label className="flabel">Peso (kg)</label><input className="finput" type="number" value={editForm.peso_iniziale||""} onChange={e=>setEditForm({...editForm,peso_iniziale:e.target.value})} /></div>
+                <div><label className="flabel">Altezza (cm)</label><input className="finput" type="number" value={editForm.altezza||""} onChange={e=>setEditForm({...editForm,altezza:e.target.value})} /></div>
+                <div><label className="flabel">Calorie target</label><input className="finput" type="number" value={editForm.calorie_target||""} onChange={e=>setEditForm({...editForm,calorie_target:e.target.value})} /></div>
+              </div>
+              <div style={{marginBottom:"1.25rem"}}><label className="flabel">Obiettivo</label>
+                <select className="fselect" value={editForm.obiettivo||""} onChange={e=>setEditForm({...editForm,obiettivo:e.target.value})}>
+                  <option value="dimagrimento">Dimagrimento</option>
+                  <option value="massa">Massa muscolare</option>
+                  <option value="mantenimento">Mantenimento</option>
+                </select>
+              </div>
+              <div style={{marginBottom:"1.25rem"}}><label className="flabel">Note</label><textarea className="finput" value={editForm.note||""} onChange={e=>setEditForm({...editForm,note:e.target.value})} style={{height:"70px",resize:"none"}} /></div>
+              <div style={{display:"flex",gap:"8px",justifyContent:"flex-end"}}>
+                <button className="btn-outline" onClick={()=>setEditing(false)}>Annulla</button>
+                <button className="btn-gold" onClick={salvaModifiche} disabled={saving}>{saving?"Salvando...":"Salva modifiche"}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {msg && <div style={{background:"var(--gold-dim)",border:".5px solid var(--gold-b)",borderRadius:"8px",padding:"10px 14px",fontSize:"12px",color:"var(--gold)",marginBottom:"1rem"}}>{msg}</div>}
 
