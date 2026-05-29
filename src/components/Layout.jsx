@@ -32,6 +32,7 @@ export default function Layout({ children }) {
         <NavLink to="/report" className="nav-link"><i className="ti ti-file-analytics"></i> Report AI</NavLink>
         <span className="nav-sec">Gestione</span>
         <NavLink to="/cicli" className="nav-link"><i className="ti ti-calendar-event"></i> Cicli e sessioni</NavLink>
+        <NavLink to="/shop" className="nav-link"><i className="ti ti-shopping-bag"></i> Shop</NavLink>
         <NavLink to="/impostazioni" className="nav-link"><i className="ti ti-settings"></i> Impostazioni</NavLink>
         <div className="theme-wrap">
           <div className="theme-label">Tema</div>
