@@ -1,3 +1,4 @@
+import AutocheckCliente from "../components/AutocheckCliente"
 import { useState } from "react"
 import { supabase } from "../lib/supabase"
 
@@ -128,17 +129,7 @@ export default function AreaCliente() {
           </div>
         )}
 
-        {tab === "autocheck" && (
-          <div style={{background:"#111",border:".5px solid rgba(201,168,76,0.15)",borderRadius:"12px",padding:"1.25rem"}}>
-            <div style={{fontSize:"14px",fontWeight:500,color:"#F0E6C8",marginBottom:"1rem"}}>Autocheck</div>
-            <div style={{background:"rgba(201,168,76,0.08)",border:".5px solid rgba(201,168,76,0.2)",borderRadius:"8px",padding:"1rem",marginBottom:"1rem",fontSize:"12px",color:"#8A7A5A"}}>
-              Invia il tuo check periodico al PT con foto e dati. Riceverai una notifica ogni 7, 14, 21 o 28 giorni.
-            </div>
-            <a href="/autocheck" style={{display:"block",width:"100%",background:"#C9A84C",color:"#0A0A0A",border:"none",borderRadius:"7px",padding:"11px",fontSize:"13px",fontWeight:500,cursor:"pointer",textAlign:"center",textDecoration:"none"}}>
-              Vai all autocheck
-            </a>
-          </div>
-        )}
+        {tab === "autocheck" && <AutocheckCliente clienteId={cliente.id} />}
       </div>
     </div>
   )
