@@ -9,6 +9,7 @@ import Alert from "./pages/Alert"
 import AreaCliente from "./pages/AreaCliente"
 import Calendario from "./pages/Calendario"
 import Sessioni from "./pages/Sessioni"
+import Shop from "./pages/Shop"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/area-cliente" element={<AreaCliente />} />
         <Route path="/calendario" element={<Calendario />} />
         <Route path="/sessioni" element={<Sessioni />} />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
     </BrowserRouter>
   )
