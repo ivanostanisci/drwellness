@@ -62,64 +62,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* TABELLA CLIENTI */}
-      <div className="card">
-        <div className="card-hdr">
-          <span className="card-title">
-            <i className="ti ti-users" style={{color:'var(--gold)',fontSize:'14px'}}></i>
-            Clienti attivi
-          </span>
-          <span style={{fontSize:'11px',color:'var(--gold)',cursor:'pointer'}} onClick={()=>window.location.href='/clienti'}>
-            Vedi tutti →
-          </span>
-        </div>
-
-        {/* HEADER TABELLA */}
-        <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1.3fr 1fr 60px',gap:'10px',padding:'7px 1.1rem',background:'var(--card2)',fontSize:'10px',color:'var(--t3)',fontWeight:600,textTransform:'uppercase',letterSpacing:'.06em'}}>
-          <span>Cliente</span><span>Obiettivo</span><span>Ciclo</span><span>Stato</span><span></span>
-        </div>
-
-        {loading && (
-          <div style={{padding:'2rem',textAlign:'center',fontSize:'12px',color:'var(--t2)'}}>
-            <i className="ti ti-loader-2" style={{fontSize:'20px',display:'block',marginBottom:'8px'}}></i>
-            Caricamento...
-          </div>
-        )}
-
-        {!loading && clienti.length === 0 && (
-          <div style={{padding:'2rem',textAlign:'center',fontSize:'12px',color:'var(--t2)'}}>
-            <i className="ti ti-users" style={{fontSize:'28px',display:'block',marginBottom:'8px',color:'var(--t3)'}}></i>
-            Nessun cliente ancora.<br/>
-            <span style={{color:'var(--gold)',cursor:'pointer'}} onClick={()=>window.location.href='/clienti'}>Aggiungi il primo cliente →</span>
-          </div>
-        )}
-
-        {clienti.map((c, i) => (
-          <div key={c.id} style={{display:'grid',gridTemplateColumns:'2fr 1fr 1.3fr 1fr 60px',alignItems:'center',gap:'10px',padding:'9px 1.1rem',borderBottom:i<clienti.length-1?'.5px solid var(--bord)':'none',fontSize:'12px',cursor:'pointer',transition:'background .15s'}}
-            onMouseEnter={e=>e.currentTarget.style.background='var(--hover)'}
-            onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
-            <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
-              <div style={{width:'28px',height:'28px',borderRadius:'50%',background:'var(--gold-dim)',border:'.5px solid var(--gold-b)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'10px',fontWeight:600,color:'var(--gold)',flexShrink:0}}>
-                {c.nome[0]}{c.cognome[0]}
-              </div>
-              <div>
-                <div style={{fontWeight:500,color:'var(--t1)'}}>{c.nome} {c.cognome}</div>
-                <div style={{fontSize:'10px',color:'var(--t2)'}}>{c.peso_iniziale} kg</div>
-              </div>
-            </div>
-            <span style={{fontSize:'11px',color:'var(--t2)',textTransform:'capitalize'}}>{c.obiettivo || '—'}</span>
-            <div>
-              <div style={{background:'var(--card2)',borderRadius:'4px',height:'5px',marginBottom:'2px'}}>
-                <div style={{height:'5px',borderRadius:'4px',background:'var(--gold)',width:'50%'}}></div>
-              </div>
-              <div style={{fontSize:'9px',color:'var(--t3)'}}>in corso</div>
-            </div>
-            <span className="pill p-ok">In target</span>
-            <span style={{color:'var(--gold)',fontSize:'11px'}}>Apri →</span>
-          </div>
-        ))}
-      </div>
-
       {/* SESSIONI OGGI */}
       <div className="card">
         <div className="card-hdr">
