@@ -4,8 +4,8 @@ import Clienti from "./pages/Clienti"
 import SchedaCliente from "./pages/SchedaCliente"
 import PazientiOnline from "./pages/PazientiOnline"
 import Allenamenti from "./pages/Allenamenti"
-import VisitaNutrizionale from "./pages/VisitaNutrizionale"
 import Autocheck from "./pages/Autocheck"
+import Alert from "./pages/Alert"
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
         <Route path="/clienti/:id" element={<SchedaCliente />} />
         <Route path="/online" element={<PazientiOnline />} />
         <Route path="/allenamenti" element={<Allenamenti />} />
-        <Route path="/nutrizionale" element={<VisitaNutrizionale />} />
         <Route path="/autocheck" element={<Autocheck />} />
+        <Route path="/alert" element={<Alert />} />
       </Routes>
     </BrowserRouter>
   )
