@@ -3,6 +3,7 @@ import Layout from '../components/Layout'
 import { supabase } from '../lib/supabase'
 
 export default function Clienti() {
+  const navigate = useNavigate()
   const [clienti, setClienti] = useState([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -101,7 +102,7 @@ export default function Clienti() {
             <span style={{fontSize:'12px',color:'var(--t1)'}}>{c.peso_iniziale ? c.peso_iniziale+' kg' : '—'}</span>
             <span style={{fontSize:'11px',color:'var(--t2)',textTransform:'capitalize'}}>{c.obiettivo || '—'}</span>
             <span style={{fontSize:'11px',color:'var(--t2)'}}>{c.calorie_target ? c.calorie_target+' kcal' : '—'}</span>
-            <span style={{color:'var(--gold)',fontSize:'11px'}}>Apri →</span>
+            <span style={{color:'var(--gold)',fontSize:'11px',cursor:'pointer'}} onClick={()=>navigate('/clienti/'+c.id)}>Apri →</span>
           </div>
         ))}
       </div>
