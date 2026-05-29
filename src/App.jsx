@@ -7,6 +7,8 @@ import Allenamenti from "./pages/Allenamenti"
 import Autocheck from "./pages/Autocheck"
 import Alert from "./pages/Alert"
 import AreaCliente from "./pages/AreaCliente"
+import Calendario from "./pages/Calendario"
+import Sessioni from "./pages/Sessioni"
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/autocheck" element={<Autocheck />} />
         <Route path="/alert" element={<Alert />} />
         <Route path="/area-cliente" element={<AreaCliente />} />
+        <Route path="/calendario" element={<Calendario />} />
+        <Route path="/sessioni" element={<Sessioni />} />
       </Routes>
     </BrowserRouter>
   )
