@@ -6,6 +6,7 @@ import PazientiOnline from "./pages/PazientiOnline"
 import Allenamenti from "./pages/Allenamenti"
 import Autocheck from "./pages/Autocheck"
 import Alert from "./pages/Alert"
+import AreaCliente from "./pages/AreaCliente"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/allenamenti" element={<Allenamenti />} />
         <Route path="/autocheck" element={<Autocheck />} />
         <Route path="/alert" element={<Alert />} />
+        <Route path="/area-cliente" element={<AreaCliente />} />
       </Routes>
     </BrowserRouter>
   )
