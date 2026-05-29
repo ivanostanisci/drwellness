@@ -86,6 +86,8 @@ export default function SchedaCliente() {
 
   async function generaPiano() {
     setGenerando(true)
+    // Salviamo anamnesi e antropometrica
+    await supabase.from("clienti").update({ anamnesi, antropometrica }).eq("id", id)
     try {
       const prompt = "Sei un nutrizionista esperto. Genera un piano alimentare completo per: " + cliente.nome + " " + cliente.cognome + ", Peso: " + antropo.peso + "kg, Altezza: " + antropo.altezza + "cm, Obiettivo: " + cliente.obiettivo + ", Attivita: " + anamnesi.attivita + ", Patologie: " + (anamnesi.patologie||"nessuna") + ", Intolleranze: " + (anamnesi.intolleranze||"nessuna") + ". Includi: 1) TDEE e macros 2) Piano 7 giorni 3) Lista spesa 4) Consigli personalizzati"
       const res = await fetch("/api/genera-piano", {
@@ -271,7 +273,7 @@ export default function SchedaCliente() {
           {!pianoAI ? (
             <div>
               <div style={{background:"var(--gold-dim)",border:".5px solid var(--gold-b)",borderRadius:"8px",padding:"1rem",marginBottom:"1rem",fontSize:"12px",color:"var(--t2)"}}>
-                Compila prima anamnesi e visita antropometrica per un piano più preciso. Poi clicca Genera per creare il piano personalizzato con AI.
+                Clicca Genera per creare il piano alimentare personalizzato con AI. Per un piano più preciso compila prima Anamnesi e Visita.
               </div>
               <div style={{display:"flex",justifyContent:"flex-end"}}>
                 <button className="btn-gold" onClick={generaPiano} disabled={generando}>{generando?"Generando...":"Genera piano AI"}</button>
