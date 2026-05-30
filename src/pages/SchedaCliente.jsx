@@ -94,11 +94,35 @@ export default function SchedaCliente() {
     // Salviamo anamnesi e antropometrica
     await supabase.from("clienti").update({ anamnesi: anamnesi, antropometrica: antropo }).eq("id", id)
     try {
-      const prompt = "Sei un nutrizionista esperto. Genera un piano alimentare completo per: " + cliente.nome + " " + cliente.cognome + ", Peso: " + antropo.peso + "kg, Altezza: " + antropo.altezza + "cm, Obiettivo: " + cliente.obiettivo + ", Attivita: " + anamnesi.attivita + ", Patologie: " + (anamnesi.patologie||"nessuna") + ", Intolleranze: " + (anamnesi.intolleranze||"nessuna") + ". Includi: 1) TDEE e macros 2) Piano 7 giorni 3) Lista spesa 4) Consigli personalizzati"
+      const bmi = antropo.altezza ? (parseFloat(antropo.peso||cliente.peso_iniziale||0) / Math.pow(parseFloat(antropo.altezza||cliente.altezza||1)/100, 2)).toFixed(1) : "N/D"
+      const prompt = "Sei il nutrizionista Dr. Wellness. Genera un piano alimentare COMPLETO e DETTAGLIATO per 7 giorni per:\n" +
+        "Nome: " + cliente.nome + " " + cliente.cognome + "\n" +
+        "Peso: " + (antropo.peso||cliente.peso_iniziale||"N/D") + " kg\n" +
+        "Altezza: " + (antropo.altezza||cliente.altezza||"N/D") + " cm\n" +
+        "BMI: " + bmi + "\n" +
+        "Eta: " + (antropo.eta||"N/D") + "\n" +
+        "Sesso: " + (antropo.sesso||"N/D") + "\n" +
+        "Obiettivo: " + (cliente.obiettivo||"N/D") + "\n" +
+        "Livello attivita: " + (anamnesi.attivita||"sedentario") + "\n" +
+        "Patologie: " + (anamnesi.patologie||"nessuna") + "\n" +
+        "Farmaci: " + (anamnesi.farmaci||"nessuno") + "\n" +
+        "Allergie: " + (anamnesi.allergie||"nessuna") + "\n" +
+        "Intolleranze: " + (anamnesi.intolleranze||"nessuna") + "\n" +
+        "Fumo: " + (anamnesi.fumo||"no") + "\n" +
+        "Alcol: " + (anamnesi.alcol||"no") + "\n" +
+        "Ore sonno: " + (anamnesi.ore_sonno||"N/D") + "\n" +
+        "Stress: " + (anamnesi.stress||"3") + "/5\n\n" +
+        "GENERA OBBLIGATORIAMENTE:\n" +
+        "1. CALCOLO TDEE E DEFICIT/SURPLUS CALORICO con formula specifica\n" +
+        "2. MACRONUTRIENTI GIORNALIERI (proteine/carboidrati/grassi in grammi)\n" +
+        "3. PIANO 7 GIORNI COMPLETO (LUNEDI, MARTEDI, MERCOLEDI, GIOVEDI, VENERDI, SABATO, DOMENICA) ognuno con COLAZIONE, SPUNTINO MATTINA, PRANZO, SPUNTINO POMERIGGIO, CENA con grammature precise\n" +
+        "4. LISTA DELLA SPESA settimanale\n" +
+        "5. NOTE IMPORTANTI e consigli personalizzati\n\n" +
+        "Usa formato chiaro con i nomi dei giorni in maiuscolo. Sii molto specifico con le grammature."
       const res = await fetch("https://pjojacqzpujdesxqqcnf.supabase.co/functions/v1/genera-piano", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqb2phY3F6cHVqZGVzeHFxY25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3Mjc2MjQsImV4cCI6MjA5NTMwMzYyNH0.cLygQqHlUtCi4esA0a_XcNRxOUL5Z5p5RdB60OmcZ8s" },
-        body: JSON.stringify({ model: "claude-sonnet-4-5", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
+        body: JSON.stringify({ model: "claude-sonnet-4-5", max_tokens: 4000, messages: [{ role: "user", content: prompt }] })
       })
       const data = await res.json()
       if (data.content && data.content[0]) setPianoAI(data.content[0].text)
