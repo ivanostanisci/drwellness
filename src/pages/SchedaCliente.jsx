@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import PianoAlimentarePDF from "../components/PianoAlimentarePDF"
 import { useParams, useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 import { supabase } from "../lib/supabase"
@@ -281,11 +282,7 @@ export default function SchedaCliente() {
             </div>
           ) : (
             <div>
-              <div style={{background:"var(--card2)",border:".5px solid var(--bord)",borderRadius:"10px",padding:"1.25rem",maxHeight:"500px",overflowY:"auto",fontSize:"12px",color:"var(--t2)",lineHeight:1.8,whiteSpace:"pre-wrap",marginBottom:"1rem"}}>{pianoAI}</div>
-              <div style={{display:"flex",gap:"8px",justifyContent:"flex-end"}}>
-                <button className="btn-outline" onClick={()=>setPianoAI("")}>Rigenera</button>
-                <button className="btn-gold" onClick={()=>window.print()}>Stampa</button>
-              </div>
+              <PianoAlimentarePDF piano={pianoAI} cliente={cliente} />
             </div>
           )}
         </div>
