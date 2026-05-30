@@ -34,6 +34,7 @@ export default function SchedaCliente() {
       setCliente(c)
       setAntropro(prev => ({...prev, peso: c.peso_iniziale||"", altezza: c.altezza||"", ...(c.antropometrica||{})}))
       if (c.anamnesi) setAnamnesi(c.anamnesi)
+      if (c.piano_alimentare) setPianoAI(c.piano_alimentare)
     }
     if (m) setMisurazioni(m)
     if (a) setAutocheck(a)
