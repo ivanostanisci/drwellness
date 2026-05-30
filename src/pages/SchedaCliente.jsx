@@ -92,7 +92,7 @@ export default function SchedaCliente() {
       const prompt = "Sei un nutrizionista esperto. Genera un piano alimentare completo per: " + cliente.nome + " " + cliente.cognome + ", Peso: " + antropo.peso + "kg, Altezza: " + antropo.altezza + "cm, Obiettivo: " + cliente.obiettivo + ", Attivita: " + anamnesi.attivita + ", Patologie: " + (anamnesi.patologie||"nessuna") + ", Intolleranze: " + (anamnesi.intolleranze||"nessuna") + ". Includi: 1) TDEE e macros 2) Piano 7 giorni 3) Lista spesa 4) Consigli personalizzati"
       const res = await fetch("https://pjojacqzpujdesxqqcnf.supabase.co/functions/v1/genera-piano", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqb2phY3F6cHVqZGVzeHFxY25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3Mjc2MjQsImV4cCI6MjA5NTMwMzYyNH0.cLygQqHlUtCi4esA0a_XcNRxOUL5Z5p5RdB60OmcZ8s" },
         body: JSON.stringify({ model: "claude-sonnet-4-5", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
       })
       const data = await res.json()

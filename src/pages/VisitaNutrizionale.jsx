@@ -24,7 +24,7 @@ export default function VisitaNutrizionale() {
       const prompt = "Sei un nutrizionista esperto. Crea un piano alimentare per: " + form.nome + " " + form.cognome + ", Peso: " + form.peso + "kg, Altezza: " + form.altezza + "cm, Obiettivo: " + form.obiettivo + ", Attivita: " + form.attivita_fisica + ", Patologie: " + (form.patologie||"nessuna") + ", Intolleranze: " + (form.intolleranze||"nessuna") + ", Cibi preferiti: " + form.preferenze + ", Cibi non graditi: " + form.cibi_no + ". Genera: 1) TDEE e macros 2) Piano 7 giorni 3) Lista spesa 4) 5 consigli"
       const res = await fetch("/api/genera-piano", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqb2phY3F6cHVqZGVzeHFxY25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3Mjc2MjQsImV4cCI6MjA5NTMwMzYyNH0.cLygQqHlUtCi4esA0a_XcNRxOUL5Z5p5RdB60OmcZ8s" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
       })
       const data = await res.json()
