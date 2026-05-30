@@ -71,12 +71,13 @@ export default function PianoAlimentarePDF({ piano, cliente }) {
     let sezioniGiorno = [], giornoCorrente = null, righeCorrenti = [], primaRighe = [], trovato = false
     righe.forEach(r => {
       const t = r.trim()
-      const norm = t.toUpperCase()
-      const isG = giorni.some(g => norm.startsWith(g) || norm.replace(/[ÀÁÂÃ]/g,"A").replace(/[ÈÉÊ]/g,"E").replace(/[ÌÍÎ]/g,"I").replace(/[ÒÓÔÕ]/g,"O").replace(/[ÙÚÛ]/g,"U").startsWith(g))
+      const clean = t.replace(/^[#*\s📅]+/,"").toUpperCase()
+      const norm = clean.normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+      const isG = giorni.some(g => norm.startsWith(g))
       if (isG) {
         trovato = true
         if (giornoCorrente) sezioniGiorno.push({ giorno: giornoCorrente, righe: righeCorrenti })
-        giornoCorrente = t; righeCorrenti = []
+        giornoCorrente = t.replace(/^[#*\s📅]+/,"").trim(); righeCorrenti = []
       } else if (trovato) righeCorrenti.push(t)
       else primaRighe.push(t)
     })
