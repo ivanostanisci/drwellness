@@ -324,7 +324,7 @@ export default function SchedaCliente() {
               <textarea 
                 value={pianoAI} 
                 onChange={e=>setPianoAI(e.target.value)}
-                style={{width:"100%",background:"var(--card2)",border:".5px solid var(--bord)",borderRadius:"8px",padding:"1rem",fontSize:"12px",color:"var(--t1)",lineHeight:1.8,resize:"vertical",minHeight:"400px",outline:"none",fontFamily:"monospace"}}
+                style={{width:"100%",background:"var(--card2)",border:".5px solid var(--bord)",borderRadius:"8px",padding:"1rem",fontSize:"11px",color:"var(--t1)",lineHeight:1.8,resize:"vertical",minHeight:"400px",outline:"none",fontFamily:"DM Sans,sans-serif"}}
               />
             </div>
             <div style={{display:"flex",gap:"8px",justifyContent:"flex-end",marginBottom:"1rem"}}>

@@ -87,7 +87,8 @@ export default function PianoAlimentarePDF({ piano, cliente }) {
       const pasti = []; let tipo = null, voci = []
       righe.forEach(r => {
         const t = r.trim()
-        const p = Object.keys(icone).find(k => t.toUpperCase().startsWith(k))
+        const clean2 = t.replace(/^[*#\s📅🌅🍽🌙]+/,"").replace(/\*\*/g,"").toUpperCase()
+        const p = Object.keys(icone).find(k => clean2.startsWith(k))
         if (p) { if (tipo) pasti.push({tipo, voci}); tipo = p; voci = [] }
         else if (t && tipo) voci.push(t.replace(/^[-•*\[\]\s]*/,"").replace(/\*\*/g,"").trim())
       })
