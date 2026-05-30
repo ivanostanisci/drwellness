@@ -65,14 +65,14 @@ export default function PianoAlimentarePDF({ piano, cliente }) {
 
     // ===== PARSER PIANO =====
     const righe = piano.split("\n")
-    const giorni = ["LUNEDI","MARTEDI","MERCOLEDI","GIOVEDI","VENERDI","SABATO","DOMENICA"]
+    const giorni = ["LUNEDI","MARTEDI","MERCOLEDI","GIOVEDI","VENERDI","SABATO","DOMENICA","LUNEDÌ","MARTEDÌ","MERCOLEDÌ","GIOVEDÌ","VENERDÌ"]
     const icone = { "COLAZIONE":"COLAZIONE", "SPUNTINO":"SPUNTINO", "PRANZO":"PRANZO", "CENA":"CENA" }
 
     let sezioniGiorno = [], giornoCorrente = null, righeCorrenti = [], primaRighe = [], trovato = false
     righe.forEach(r => {
       const t = r.trim()
-      const norm = t.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-      const isG = giorni.some(g => norm.startsWith(g))
+      const norm = t.toUpperCase()
+      const isG = giorni.some(g => norm.startsWith(g) || norm.replace(/[ÀÁÂÃ]/g,"A").replace(/[ÈÉÊ]/g,"E").replace(/[ÌÍÎ]/g,"I").replace(/[ÒÓÔÕ]/g,"O").replace(/[ÙÚÛ]/g,"U").startsWith(g))
       if (isG) {
         trovato = true
         if (giornoCorrente) sezioniGiorno.push({ giorno: giornoCorrente, righe: righeCorrenti })
