@@ -148,18 +148,18 @@ export default function PianoAlimentarePDF({ piano, cliente }) {
 
         let py = y + 13
         pasti.forEach(p => {
-          doc.setFontSize(8)
+          doc.setFontSize(9)
           doc.setFont("helvetica", "bold")
           doc.setTextColor(...oro)
           const emoji = p.tipo === "COLAZIONE" ? "☀ " : p.tipo === "PRANZO" ? "🍽 " : p.tipo === "CENA" ? "🌙 " : "● "
           doc.text(p.tipo, x+3, py)
           py += 4
-          doc.setFontSize(7.5)
+          doc.setFontSize(8.5)
           doc.setFont("helvetica", "normal")
           doc.setTextColor(...testoscuro)
           p.voci.slice(0,6).forEach(v => {
             doc.text("• " + v.substring(0,38), x+4, py)
-            py += 3.8
+            py += 4.5
           })
           py += 1
         })
