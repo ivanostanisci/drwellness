@@ -30,7 +30,11 @@ export default function SchedaCliente() {
     const { data: c } = await supabase.from("clienti").select("*").eq("id", id).single()
     const { data: m } = await supabase.from("misurazioni").select("*").eq("cliente_id", id).order("data", { ascending: false })
     const { data: a } = await supabase.from("autocheck").select("*").eq("cliente_id", id).order("created_at", { ascending: false })
-    if (c) { setCliente(c); setAntropro(prev => ({...prev, peso: c.peso_iniziale||"", altezza: c.altezza||""})) }
+    if (c) { 
+      setCliente(c)
+      setAntropro(prev => ({...prev, peso: c.peso_iniziale||"", altezza: c.altezza||"", ...(c.antropometrica||{})}))
+      if (c.anamnesi) setAnamnesi(c.anamnesi)
+    }
     if (m) setMisurazioni(m)
     if (a) setAutocheck(a)
     setLoading(false)
@@ -215,7 +219,11 @@ export default function SchedaCliente() {
             <div><label className="flabel">Livello stress (1-5)</label><select className="fselect" value={anamnesi.stress} onChange={e=>ff(setAnamnesi)("stress",e.target.value)}><option value="1">1 Minimo</option><option value="2">2 Basso</option><option value="3">3 Moderato</option><option value="4">4 Alto</option><option value="5">5 Massimo</option></select></div>
           </div>
           <div style={{marginBottom:"1rem"}}><label className="flabel">Note aggiuntive</label><textarea className="finput" value={anamnesi.note} onChange={e=>ff(setAnamnesi)("note",e.target.value)} placeholder="Altre informazioni rilevanti..." style={{height:"70px",resize:"none"}} /></div>
-          <div style={{display:"flex",justifyContent:"flex-end"}}><button className="btn-gold" onClick={()=>setMsg("Anamnesi salvata!")}>Salva anamnesi</button></div>
+          <div style={{display:"flex",justifyContent:"flex-end"}}><button className="btn-gold" onClick={async()=>{
+      await supabase.from("clienti").update({anamnesi:anamnesi}).eq("id",id)
+      setMsg("Anamnesi salvata!")
+      setTimeout(()=>setMsg(""),3000)
+    }}>Salva anamnesi</button></div>
         </div>
       )}
 
@@ -263,7 +271,11 @@ export default function SchedaCliente() {
                 <div key={k}><label className="flabel">{l} (cm)</label><input className="finput" type="number" value={antropo[k]} onChange={e=>ff(setAntropro)(k,e.target.value)} placeholder="0" /></div>
               ))}
             </div>
-            <div style={{display:"flex",justifyContent:"flex-end",marginTop:"1rem"}}><button className="btn-gold" onClick={()=>setMsg("Visita salvata!")}>Salva visita</button></div>
+            <div style={{display:"flex",justifyContent:"flex-end",marginTop:"1rem"}}><button className="btn-gold" onClick={async()=>{
+      await supabase.from("clienti").update({antropometrica:antropo}).eq("id",id)
+      setMsg("Visita antropometrica salvata!")
+      setTimeout(()=>setMsg(""),3000)
+    }}>Salva visita</button></div>
           </div>
         </div>
       )}
