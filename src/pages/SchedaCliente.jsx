@@ -334,6 +334,7 @@ export default function SchedaCliente() {
                 setMsg("Piano salvato!")
                 setTimeout(()=>setMsg(""),3000)
               }}><i className="ti ti-device-floppy"></i> Salva piano</button>
+              {msg === "Piano salvato!" && <span style={{fontSize:"12px",color:"var(--green)",fontWeight:500}}>✓ Piano salvato!</span>}
             </div>
             <PianoAlimentarePDF piano={pianoAI} cliente={cliente} />
             </div>
