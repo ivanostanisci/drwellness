@@ -9,8 +9,8 @@ export default function Layout({ children }) {
     <div className={tema} style={{display:"flex",height:"100vh"}}>
       <style>{css}</style>
       <div className="sidebar">
-        <div style={{padding:"1.25rem",borderBottom:".5px solid var(--bord)",display:"flex",justifyContent:"center",alignItems:"center",background:"var(--card)"}}>
-          <img src="/logo.jpg" style={{width:"100px",objectFit:"contain",filter:"brightness(0.75) sepia(0.2) saturate(0.8)"}}/>
+        <div style={{padding:"1.25rem",borderBottom:".5px solid var(--bord)",display:"flex",justifyContent:"center",alignItems:"center"}}>
+          <img src="/logo.jpg" style={{width:"140px",objectFit:"contain",mixBlendMode:"multiply",filter:"sepia(0.3) saturate(0.85) brightness(0.8)"}}/>
         </div>
         <span className="nav-sec">Principale</span>
         <NavLink to="/dashboard" className="nav-link"><i className="ti ti-layout-dashboard"></i> Dashboard</NavLink>
