@@ -220,7 +220,7 @@ export default function SchedaCliente() {
       {tab === "anagrafica" && (
         <div className="card" style={{padding:"1.25rem"}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"12px"}}>
-            {[["Nome",cliente.nome],["Cognome",cliente.cognome],["Email",cliente.email],["Telefono",cliente.telefono||"—"],["Peso iniziale",cliente.peso_iniziale?cliente.peso_iniziale+" kg":"—"],["Altezza",cliente.altezza?cliente.altezza+" cm":"—"],["Obiettivo",cliente.obiettivo],["Calorie target",cliente.calorie_target?cliente.calorie_target+" kcal":"—"]].map(([l,v])=>(
+            {[["Nome",cliente.nome],["Cognome",cliente.cognome],["Email",cliente.email],["Telefono",cliente.telefono||"—"],["Peso iniziale",cliente.peso_iniziale?cliente.peso_iniziale+" kg":"—"],["Altezza",cliente.altezza?cliente.altezza+" cm":"—"],["Obiettivo",cliente.obiettivo]].map(([l,v])=>(
               <div key={l} style={{background:"var(--card2)",border:".5px solid var(--bord)",borderRadius:"8px",padding:"10px 12px"}}>
                 <div style={{fontSize:"10px",color:"var(--t3)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:"4px"}}>{l}</div>
                 <div style={{fontSize:"13px",color:"var(--t1)",fontWeight:500,textTransform:"capitalize"}}>{v}</div>
