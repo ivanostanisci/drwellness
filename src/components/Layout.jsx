@@ -9,7 +9,8 @@ export default function Layout({ children }) {
     <div className={tema} style={{display:"flex",height:"100vh"}}>
       <style>{css}</style>
       <div className="sidebar">
-        <div className="logo-area">
+        <div className="logo-area" style={{display:"flex",alignItems:"center",gap:"10px",padding:"1rem"}}>
+          <img src="/logo.jpg" style={{width:"48px",height:"48px",objectFit:"contain",borderRadius:"4px"}} />
           <svg width="32" height="32" viewBox="0 0 18 20" fill="none">
             <path d="M9 1L2 4V10C2 14.4 5 18.3 9 19.5C13 18.3 16 14.4 16 10V4L9 1Z" stroke="#C9A84C" strokeWidth="1.2" fill="rgba(201,168,76,0.15)"/>
             <path d="M6 10L8 12L12 8" stroke="#C9A84C" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
