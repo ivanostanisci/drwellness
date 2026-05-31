@@ -9,14 +9,10 @@ export default function Layout({ children }) {
     <div className={tema} style={{display:"flex",height:"100vh"}}>
       <style>{css}</style>
       <div className="sidebar">
-        <div className="logo-area" style={{padding:"1rem 1.1rem",display:"flex",alignItems:"center"}}>
-          <img src="/logo.jpg" style={{width:"110px",objectFit:"contain",filter:"brightness(0.85)"}}/>
-        </div>
+        <div style={{padding:"1rem",borderBottom:".5px solid var(--bord)"}}>
+          <img src="/logo.jpg" style={{width:"110px",objectFit:"contain",filter:"brightness(0.8) saturate(0.85)"}}/>
         </div>
         <span className="nav-sec">Principale</span>
-        <div style={{padding:"1rem 1.1rem",borderBottom:".5px solid var(--bord)",marginBottom:"0.5rem"}}>
-          <img src="/logo.jpg" style={{width:"120px",objectFit:"contain",filter:"brightness(0.8) saturate(0.9)"}}/>
-        </div>
         <NavLink to="/dashboard" className="nav-link"><i className="ti ti-layout-dashboard"></i> Dashboard</NavLink>
         <NavLink to="/clienti" className="nav-link"><i className="ti ti-users"></i> Clienti</NavLink>
         <NavLink to="/allenamenti" className="nav-link"><i className="ti ti-barbell"></i> Allenamenti</NavLink>
