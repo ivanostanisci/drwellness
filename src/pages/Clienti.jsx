@@ -105,7 +105,7 @@ export default function Clienti() {
             <span style={{fontSize:'11px',color:'var(--t2)',textTransform:'capitalize'}}>{c.obiettivo || '—'}</span>
             <span style={{fontSize:'11px',color:'var(--t2)'}}>{c.calorie_target ? c.calorie_target+' kcal' : '—'}</span>
             <span style={{color:'var(--gold)',fontSize:'11px',cursor:'pointer'}} onClick={()=>navigate('/clienti/'+c.id)}>Apri →</span>
-                <span style={{color:'var(--red)',fontSize:'11px',cursor:'pointer',marginLeft:'8px'}} onClick={async()=>{if(window.confirm('Eliminare '+c.nome+' '+c.cognome+'?')){await supabase.from('clienti').delete().eq('id',c.id);fetchClienti()}}}>Elimina</span>
+                <span style={{color:'var(--t3)',fontSize:'11px',cursor:'pointer',marginLeft:'8px'}} onClick={async()=>{if(window.confirm('Eliminare '+c.nome+' '+c.cognome+'?')){await supabase.from('clienti').delete().eq('id',c.id);fetchClienti()}}}>Elimina</span>
           </div>
         ))}
       </div>
