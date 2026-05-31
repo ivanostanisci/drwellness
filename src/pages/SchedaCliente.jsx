@@ -182,13 +182,19 @@ export default function SchedaCliente() {
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"10px",marginBottom:"10px"}}>
                 <div><label className="flabel">Peso (kg)</label><input className="finput" type="number" value={editForm.peso_iniziale||""} onChange={e=>setEditForm({...editForm,peso_iniziale:e.target.value})} /></div>
                 <div><label className="flabel">Altezza (cm)</label><input className="finput" type="number" value={editForm.altezza||""} onChange={e=>setEditForm({...editForm,altezza:e.target.value})} /></div>
-                <div><label className="flabel">Calorie target</label><input className="finput" type="number" value={editForm.calorie_target||""} onChange={e=>setEditForm({...editForm,calorie_target:e.target.value})} /></div>
+                
               </div>
               <div style={{marginBottom:"1.25rem"}}><label className="flabel">Obiettivo</label>
                 <select className="fselect" value={editForm.obiettivo||""} onChange={e=>setEditForm({...editForm,obiettivo:e.target.value})}>
-                  <option value="dimagrimento">Dimagrimento</option>
-                  <option value="massa">Massa muscolare</option>
-                  <option value="mantenimento">Mantenimento</option>
+                  <option value="">Seleziona obiettivo</option>
+                  <option value="Dimagrimento e definizione">Dimagrimento e definizione</option>
+                  <option value="Aumento massa muscolare">Aumento massa muscolare</option>
+                  <option value="Mantenimento peso forma">Mantenimento peso forma</option>
+                  <option value="Ricomposizione corporea">Ricomposizione corporea</option>
+                  <option value="Miglioramento performance sportiva">Miglioramento performance sportiva</option>
+                  <option value="Recupero post infortunio">Recupero post infortunio</option>
+                  <option value="Benessere generale e salute">Benessere generale e salute</option>
+                  <option value="Preparazione gara o evento">Preparazione gara o evento</option>
                 </select>
               </div>
               <div style={{marginBottom:"1.25rem"}}><label className="flabel">Note</label><textarea className="finput" value={editForm.note||""} onChange={e=>setEditForm({...editForm,note:e.target.value})} style={{height:"70px",resize:"none"}} /></div>
