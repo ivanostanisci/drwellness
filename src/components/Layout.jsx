@@ -15,7 +15,7 @@ export default function Layout({ children }) {
         <span className="nav-sec">Principale</span>
         <NavLink to="/dashboard" className="nav-link"><i className="ti ti-layout-dashboard"></i> Dashboard</NavLink>
         <NavLink to="/clienti" className="nav-link"><i className="ti ti-users"></i> Clienti</NavLink>
-        <NavLink to="/allenamenti" className="nav-link"><i className="ti ti-barbell"></i> Allenamenti</NavLink>
+        
         
         <span className="nav-sec">Online</span>
         <NavLink to="/online" className="nav-link"><i className="ti ti-world"></i> Pazienti Online <span className="nbadge">3</span></NavLink>
