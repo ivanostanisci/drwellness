@@ -10,7 +10,7 @@ export default function Layout({ children }) {
       <style>{css}</style>
       <div className="sidebar">
         <div style={{padding:"1.25rem",borderBottom:".5px solid var(--bord)",display:"flex",justifyContent:"center",alignItems:"center"}}>
-          <img src="/logo.jpg" style={{width:"140px",objectFit:"contain",mixBlendMode:"multiply",filter:"sepia(0.3) saturate(0.85) brightness(0.8)"}}/>
+          <img src="/logo.jpg" style={{width:"140px",objectFit:"contain",mixBlendMode:"screen",filter:"sepia(0.4) saturate(1.2) brightness(1.1)"}}/>
         </div>
         <span className="nav-sec">Principale</span>
         <NavLink to="/dashboard" className="nav-link"><i className="ti ti-layout-dashboard"></i> Dashboard</NavLink>
