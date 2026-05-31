@@ -72,7 +72,8 @@ export default function SchedaCliente() {
 
   async function salvaModifiche() {
     setSaving(true)
-    await supabase.from("clienti").update(editForm).eq("id", id)
+    const { nome, cognome, email, telefono, peso_iniziale, altezza, obiettivo, note } = editForm
+    await supabase.from("clienti").update({ nome, cognome, email, telefono, peso_iniziale, altezza, obiettivo, note }).eq("id", id)
     setEditing(false)
     fetchDati()
     setMsg("Cliente aggiornato!")
