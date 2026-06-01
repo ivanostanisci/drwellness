@@ -277,28 +277,94 @@ export default function SchedaCliente() {
 
       {tab === "anamnesi" && (
         <div className="card" style={{padding:"1.25rem"}}>
-          <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Anamnesi medica</div>
-          <div style={{marginBottom:"10px"}}><label className="flabel">Patologie diagnosticate</label><textarea className="finput" value={anamnesi.patologie} onChange={e=>ff(setAnamnesi)("patologie",e.target.value)} placeholder="Es. diabete, ipertensione, ipotiroidismo..." style={{height:"70px",resize:"none"}} /></div>
-          <div style={{marginBottom:"10px"}}><label className="flabel">Farmaci assunti</label><textarea className="finput" value={anamnesi.farmaci} onChange={e=>ff(setAnamnesi)("farmaci",e.target.value)} placeholder="Es. metformina, levotiroxina..." style={{height:"70px",resize:"none"}} /></div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px",marginBottom:"10px"}}>
-            <div><label className="flabel">Allergie</label><textarea className="finput" value={anamnesi.allergie} onChange={e=>ff(setAnamnesi)("allergie",e.target.value)} placeholder="Es. arachidi, pesce..." style={{height:"60px",resize:"none"}} /></div>
-            <div><label className="flabel">Intolleranze</label><textarea className="finput" value={anamnesi.intolleranze} onChange={e=>ff(setAnamnesi)("intolleranze",e.target.value)} placeholder="Es. lattosio, glutine..." style={{height:"60px",resize:"none"}} /></div>
+          <div style={{fontSize:"13px",fontWeight:600,color:"var(--t1)",marginBottom:"1rem"}}>Anamnesi medica</div>
+          
+          <div style={{marginBottom:"12px"}}>
+            <label className="flabel">Patologie diagnosticate</label>
+            <div style={{display:"flex",flexWrap:"wrap",gap:"6px",marginBottom:"6px"}}>
+              {["Diabete tipo 1","Diabete tipo 2","Ipertensione","Ipotiroidismo","Ipertiroidismo","Celiachia","Colite","Gastrite","Insufficienza renale","Malattie cardiovascolari","Osteoporosi","Artrite","Ernia del disco","Sindrome metabolica","PCOS","Dislipidemia","Obesità","Anemia","Asma","Nessuna"].map(p=>(
+                <button key={p} onClick={()=>{
+                  const lista = anamnesi.patologie ? anamnesi.patologie.split(",").map(s=>s.trim()).filter(Boolean) : []
+                  const idx = lista.indexOf(p)
+                  if(idx>=0) lista.splice(idx,1); else lista.push(p)
+                  ff(setAnamnesi)("patologie", lista.join(", "))
+                }} style={{padding:"5px 10px",borderRadius:"20px",fontSize:"11px",fontWeight:500,cursor:"pointer",border:".5px solid",borderColor:anamnesi.patologie?.includes(p)?"var(--gold-b)":"var(--bord)",background:anamnesi.patologie?.includes(p)?"var(--gold-dim)":"transparent",color:anamnesi.patologie?.includes(p)?"var(--gold)":"var(--t2)"}}>
+                  {p}
+                </button>
+              ))}
+            </div>
+            {anamnesi.patologie && <div style={{fontSize:"11px",color:"var(--gold)",marginTop:"4px"}}>Selezionate: {anamnesi.patologie}</div>}
           </div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"10px",marginBottom:"10px"}}>
+
+          <div style={{marginBottom:"12px"}}>
+            <label className="flabel">Farmaci assunti</label>
+            <div style={{display:"flex",flexWrap:"wrap",gap:"6px",marginBottom:"6px"}}>
+              {["Metformina","Levotiroxina","ACE-inibitori","Beta-bloccanti","Statine","Antidepressivi","Ansiolitici","Contraccettivi orali","Insulina","Cortisone","Antinfiammatori","Omeprazolo","Nessuno"].map(f=>(
+                <button key={f} onClick={()=>{
+                  const lista = anamnesi.farmaci ? anamnesi.farmaci.split(",").map(s=>s.trim()).filter(Boolean) : []
+                  const idx = lista.indexOf(f)
+                  if(idx>=0) lista.splice(idx,1); else lista.push(f)
+                  ff(setAnamnesi)("farmaci", lista.join(", "))
+                }} style={{padding:"5px 10px",borderRadius:"20px",fontSize:"11px",fontWeight:500,cursor:"pointer",border:".5px solid",borderColor:anamnesi.farmaci?.includes(f)?"var(--gold-b)":"var(--bord)",background:anamnesi.farmaci?.includes(f)?"var(--gold-dim)":"transparent",color:anamnesi.farmaci?.includes(f)?"var(--gold)":"var(--t2)"}}>
+                  {f}
+                </button>
+              ))}
+            </div>
+            {anamnesi.farmaci && <div style={{fontSize:"11px",color:"var(--gold)",marginTop:"4px"}}>Selezionati: {anamnesi.farmaci}</div>}
+          </div>
+
+          <div style={{marginBottom:"12px"}}>
+            <label className="flabel">Allergie alimentari</label>
+            <div style={{display:"flex",flexWrap:"wrap",gap:"6px",marginBottom:"6px"}}>
+              {["Arachidi","Frutta a guscio","Pesce","Molluschi","Uova","Latte","Grano","Soia","Sedano","Senape","Sesamo","Lupini","Nessuna"].map(a=>(
+                <button key={a} onClick={()=>{
+                  const lista = anamnesi.allergie ? anamnesi.allergie.split(",").map(s=>s.trim()).filter(Boolean) : []
+                  const idx = lista.indexOf(a)
+                  if(idx>=0) lista.splice(idx,1); else lista.push(a)
+                  ff(setAnamnesi)("allergie", lista.join(", "))
+                }} style={{padding:"5px 10px",borderRadius:"20px",fontSize:"11px",fontWeight:500,cursor:"pointer",border:".5px solid",borderColor:anamnesi.allergie?.includes(a)?"var(--gold-b)":"var(--bord)",background:anamnesi.allergie?.includes(a)?"var(--gold-dim)":"transparent",color:anamnesi.allergie?.includes(a)?"var(--gold)":"var(--t2)"}}>
+                  {a}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{marginBottom:"12px"}}>
+            <label className="flabel">Intolleranze</label>
+            <div style={{display:"flex",flexWrap:"wrap",gap:"6px",marginBottom:"6px"}}>
+              {["Lattosio","Glutine","Nichel","Fruttosio","Istamina","Sorbitolo","Nichel","FODMAP","Nessuna"].map(i=>(
+                <button key={i} onClick={()=>{
+                  const lista = anamnesi.intolleranze ? anamnesi.intolleranze.split(",").map(s=>s.trim()).filter(Boolean) : []
+                  const idx = lista.indexOf(i)
+                  if(idx>=0) lista.splice(idx,1); else lista.push(i)
+                  ff(setAnamnesi)("intolleranze", lista.join(", "))
+                }} style={{padding:"5px 10px",borderRadius:"20px",fontSize:"11px",fontWeight:500,cursor:"pointer",border:".5px solid",borderColor:anamnesi.intolleranze?.includes(i)?"var(--gold-b)":"var(--bord)",background:anamnesi.intolleranze?.includes(i)?"var(--gold-dim)":"transparent",color:anamnesi.intolleranze?.includes(i)?"var(--gold)":"var(--t2)"}}>
+                  {i}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"10px",marginBottom:"12px"}}>
             <div><label className="flabel">Fumo</label><select className="fselect" value={anamnesi.fumo} onChange={e=>ff(setAnamnesi)("fumo",e.target.value)}><option value="no">Non fumatore</option><option value="ex">Ex fumatore</option><option value="si">Fumatore</option></select></div>
             <div><label className="flabel">Alcol</label><select className="fselect" value={anamnesi.alcol} onChange={e=>ff(setAnamnesi)("alcol",e.target.value)}><option value="no">Non beve</option><option value="occasionale">Occasionale</option><option value="settimanale">Settimanale</option></select></div>
-            <div><label className="flabel">Attivita fisica</label><select className="fselect" value={anamnesi.attivita} onChange={e=>ff(setAnamnesi)("attivita",e.target.value)}><option value="sedentario">Sedentario</option><option value="leggero">Leggero</option><option value="moderato">Moderato</option><option value="intenso">Intenso</option></select></div>
+            <div><label className="flabel">Attivita fisica</label><select className="fselect" value={anamnesi.attivita} onChange={e=>ff(setAnamnesi)("attivita",e.target.value)}><option value="sedentario">Sedentario</option><option value="leggero">Leggero 1-2x sett</option><option value="moderato">Moderato 3-4x sett</option><option value="intenso">Intenso 5+ sett</option><option value="atleta">Atleta professionista</option></select></div>
           </div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px",marginBottom:"10px"}}>
-            <div><label className="flabel">Ore di sonno</label><input className="finput" type="number" value={anamnesi.ore_sonno} onChange={e=>ff(setAnamnesi)("ore_sonno",e.target.value)} placeholder="7" /></div>
-            <div><label className="flabel">Livello stress (1-5)</label><select className="fselect" value={anamnesi.stress} onChange={e=>ff(setAnamnesi)("stress",e.target.value)}><option value="1">1 Minimo</option><option value="2">2 Basso</option><option value="3">3 Moderato</option><option value="4">4 Alto</option><option value="5">5 Massimo</option></select></div>
+
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px",marginBottom:"12px"}}>
+            <div><label className="flabel">Ore di sonno</label><select className="fselect" value={anamnesi.ore_sonno} onChange={e=>ff(setAnamnesi)("ore_sonno",e.target.value)}><option value="">Seleziona</option><option value="5">Meno di 5 ore</option><option value="6">6 ore</option><option value="7">7 ore</option><option value="8">8 ore</option><option value="9">9+ ore</option></select></div>
+            <div><label className="flabel">Livello stress</label><select className="fselect" value={anamnesi.stress} onChange={e=>ff(setAnamnesi)("stress",e.target.value)}><option value="1">1 — Minimo</option><option value="2">2 — Basso</option><option value="3">3 — Moderato</option><option value="4">4 — Alto</option><option value="5">5 — Massimo</option></select></div>
           </div>
-          <div style={{marginBottom:"1rem"}}><label className="flabel">Note aggiuntive</label><textarea className="finput" value={anamnesi.note} onChange={e=>ff(setAnamnesi)("note",e.target.value)} placeholder="Altre informazioni rilevanti..." style={{height:"70px",resize:"none"}} /></div>
-          <div style={{display:"flex",justifyContent:"flex-end"}}><button className="btn-gold" onClick={async()=>{
-      await supabase.from("clienti").update({anamnesi:anamnesi}).eq("id",id)
-      setMsg("Anamnesi salvata!")
-      setTimeout(()=>setMsg(""),3000)
-    }}>Salva anamnesi</button></div>
+
+          <div style={{marginBottom:"1rem"}}><label className="flabel">Note aggiuntive</label><textarea className="finput" value={anamnesi.note} onChange={e=>ff(setAnamnesi)("note",e.target.value)} placeholder="Altre informazioni rilevanti..." style={{height:"60px",resize:"none"}} /></div>
+          
+          <div style={{display:"flex",justifyContent:"flex-end"}}>
+            <button className="btn-gold" onClick={async()=>{
+              await supabase.from("clienti").update({anamnesi:anamnesi}).eq("id",id)
+              setMsg("Anamnesi salvata!")
+              setTimeout(()=>setMsg(""),3000)
+            }}>Salva anamnesi</button>
+          </div>
         </div>
       )}
 
