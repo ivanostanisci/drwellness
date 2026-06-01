@@ -23,6 +23,8 @@ export default function SchedaCliente() {
   const [anamnesi, setAnamnesi] = useState({ patologie:"", farmaci:"", allergie:"", intolleranze:"", fumo:"no", alcol:"no", attivita:"sedentario", ore_sonno:"", stress:"3", note:"" })
   const [antropo, setAntropro] = useState({ peso:"", altezza:"", eta:"", sesso:"M", plica_tricipite:"", plica_bicipite:"", plica_sottoscapolare:"", plica_sovrailiaca:"", plica_addome:"", plica_coscia:"", vita:"", fianchi:"", torace:"", braccio_dx:"", braccio_sx:"", coscia_dx:"", coscia_sx:"", polpaccio_dx:"", polpaccio_sx:"" })
   const [nuovaMis, setNuovaMis] = useState({ peso:"", massa_grassa:"", massa_muscolare:"", note:"" })
+  const [visite, setVisite] = useState([])
+  const [showNuovaVisita, setShowNuovaVisita] = useState(false)
 
   useEffect(() => { fetchDati() }, [id])
 
@@ -30,6 +32,8 @@ export default function SchedaCliente() {
     const { data: c } = await supabase.from("clienti").select("*").eq("id", id).single()
     const { data: m } = await supabase.from("misurazioni").select("*").eq("cliente_id", id).order("data", { ascending: false })
     const { data: a } = await supabase.from("autocheck").select("*").eq("cliente_id", id).order("created_at", { ascending: false })
+    const { data: v } = await supabase.from("visite").select("*").eq("cliente_id", id).order("data", { ascending: false })
+    if (v) setVisite(v)
     if (c) { 
       setCliente(c)
       setAntropro(prev => ({...prev, peso: c.peso_iniziale||"", altezza: c.altezza||"", ...(c.antropometrica||{})}))
@@ -80,6 +84,41 @@ export default function SchedaCliente() {
     setMsg("Cliente aggiornato!")
     setSaving(false)
     setTimeout(() => setMsg(""), 3000)
+  }
+
+  async function salvaVisita() {
+    setSaving(true)
+    const bmi = antropo.altezza ? (parseFloat(antropo.peso||0) / Math.pow(parseFloat(antropo.altezza||1)/100, 2)).toFixed(1) : null
+    const grasso = calcolaPercentualeGrasso() !== "—" ? calcolaPercentualeGrasso() : null
+    await supabase.from("visite").insert([{
+      cliente_id: id,
+      peso: antropo.peso||null,
+      altezza: antropo.altezza||null,
+      eta: antropo.eta||null,
+      sesso: antropo.sesso||null,
+      bmi,
+      percentuale_grasso: grasso,
+      plica_tricipite: antropo.plica_tricipite||null,
+      plica_bicipite: antropo.plica_bicipite||null,
+      plica_sottoscapolare: antropo.plica_sottoscapolare||null,
+      plica_sovrailiaca: antropo.plica_sovrailiaca||null,
+      plica_addome: antropo.plica_addome||null,
+      plica_coscia: antropo.plica_coscia||null,
+      vita: antropo.vita||null,
+      fianchi: antropo.fianchi||null,
+      torace: antropo.torace||null,
+      braccio_dx: antropo.braccio_dx||null,
+      braccio_sx: antropo.braccio_sx||null,
+      coscia_dx: antropo.coscia_dx||null,
+      coscia_sx: antropo.coscia_sx||null,
+      polpaccio_dx: antropo.polpaccio_dx||null,
+      polpaccio_sx: antropo.polpaccio_sx||null,
+    }])
+    setMsg("Visita salvata!")
+    setShowNuovaVisita(false)
+    fetchDati()
+    setSaving(false)
+    setTimeout(()=>setMsg(""),3000)
   }
 
   async function salvaMisurazione() {
@@ -135,8 +174,8 @@ export default function SchedaCliente() {
 
   const ff = (setter) => (k, v) => setter(prev => ({...prev, [k]: v}))
 
-  const tabs = ["anagrafica","anamnesi","antropometrica","nuova visita","progressi","autocheck","alimentazione","allenamento"]
-  const tabLabels = { anagrafica:"Anagrafica", anamnesi:"Anamnesi", antropometrica:"Visita", "nuova visita":"Nuova Visita", progressi:"Progressi", autocheck:"Autocheck", alimentazione:"Alimentazione", allenamento:"Allenamento" }
+  const tabs = ["anagrafica","anamnesi","antropometrica","progressi","autocheck","alimentazione","allenamento"]
+  const tabLabels = { anagrafica:"Anagrafica", anamnesi:"Anamnesi", antropometrica:"Visita", progressi:"Progressi", autocheck:"Autocheck", alimentazione:"Alimentazione", allenamento:"Allenamento" }
 
   const graficoData = [...misurazioni].reverse().map(m => ({ data: new Date(m.data).toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}), peso: m.peso, grasso: m.massa_grassa, muscolo: m.massa_muscolare }))
 
@@ -304,11 +343,30 @@ export default function SchedaCliente() {
                 <div key={k}><label className="flabel">{l} (cm)</label><input className="finput" type="number" value={antropo[k]} onChange={e=>ff(setAntropro)(k,e.target.value)} placeholder="0" /></div>
               ))}
             </div>
-            <div style={{display:"flex",justifyContent:"flex-end",marginTop:"1rem"}}><button className="btn-gold" onClick={async()=>{
-      await supabase.from("clienti").update({antropometrica:antropo}).eq("id",id)
-      setMsg("Visita antropometrica salvata!")
-      setTimeout(()=>setMsg(""),3000)
-    }}>Salva visita</button></div>
+            <div style={{display:"flex",gap:"8px",justifyContent:"flex-end",marginTop:"1rem"}}>
+              <button className="btn-outline" onClick={async()=>{
+                await supabase.from("clienti").update({antropometrica:antropo}).eq("id",id)
+                setMsg("Dati aggiornati!")
+                setTimeout(()=>setMsg(""),3000)
+              }}>Salva dati</button>
+              <button className="btn-gold" onClick={salvaVisita} disabled={saving}>
+                <i className="ti ti-plus"></i> Salva come nuova visita
+              </button>
+            </div>
+            {visite.length > 0 && (
+              <div className="card" style={{marginTop:"1.25rem",padding:"0"}}>
+                <div className="card-hdr"><span className="card-title">Storico visite</span></div>
+                {visite.map((v,i)=>(
+                  <div key={v.id} style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr 1fr",gap:"10px",padding:"10px 1.1rem",borderBottom:i<visite.length-1?".5px solid var(--bord)":"none",fontSize:"12px",alignItems:"center"}}>
+                    <div style={{color:"var(--t2)"}}>{new Date(v.data).toLocaleDateString("it-IT")}</div>
+                    <div><span style={{color:"var(--gold)",fontWeight:500}}>{v.peso||"—"}</span> kg</div>
+                    <div>BMI <span style={{color:"var(--gold)"}}>{v.bmi||"—"}</span></div>
+                    <div>Grasso <span style={{color:"var(--gold)"}}>{v.percentuale_grasso||"—"}%</span></div>
+                    <div style={{color:"var(--t2)",fontSize:"11px"}}>Vita {v.vita||"—"} cm</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
