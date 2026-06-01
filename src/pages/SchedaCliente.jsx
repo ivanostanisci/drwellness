@@ -135,8 +135,8 @@ export default function SchedaCliente() {
 
   const ff = (setter) => (k, v) => setter(prev => ({...prev, [k]: v}))
 
-  const tabs = ["anagrafica","anamnesi","antropometrica","alimentare","allenamento","misurazioni","progressi","autocheck"]
-  const tabLabels = { anagrafica:"Anagrafica", anamnesi:"Anamnesi", antropometrica:"Visita", alimentare:"Alimentare", allenamento:"Allenamento", misurazioni:"Misurazioni", progressi:"Progressi", autocheck:"Autocheck" }
+  const tabs = ["anagrafica","anamnesi","antropometrica","nuova visita","progressi","autocheck","alimentazione","allenamento"]
+  const tabLabels = { anagrafica:"Anagrafica", anamnesi:"Anamnesi", antropometrica:"Visita", "nuova visita":"Nuova Visita", progressi:"Progressi", autocheck:"Autocheck", alimentazione:"Alimentazione", allenamento:"Allenamento" }
 
   const graficoData = [...misurazioni].reverse().map(m => ({ data: new Date(m.data).toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}), peso: m.peso, grasso: m.massa_grassa, muscolo: m.massa_muscolare }))
 
@@ -313,7 +313,7 @@ export default function SchedaCliente() {
         </div>
       )}
 
-      {tab === "alimentare" && (
+      {tab === "alimentazione" && (
         <div className="card" style={{padding:"1.25rem"}}>
           <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Piano alimentare</div>
           {!pianoAI ? (
@@ -358,7 +358,7 @@ export default function SchedaCliente() {
         </div>
       )}
 
-      {tab === "misurazioni" && (
+      {tab === "nuova visita" && (
         <div>
           <div className="card" style={{padding:"1.25rem",marginBottom:"1.25rem"}}>
             <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Nuova misurazione</div>
