@@ -343,14 +343,9 @@ export default function SchedaCliente() {
                 <div key={k}><label className="flabel">{l} (cm)</label><input className="finput" type="number" value={antropo[k]} onChange={e=>ff(setAntropro)(k,e.target.value)} placeholder="0" /></div>
               ))}
             </div>
-            <div style={{display:"flex",gap:"8px",justifyContent:"flex-end",marginTop:"1rem"}}>
-              <button className="btn-outline" onClick={async()=>{
-                await supabase.from("clienti").update({antropometrica:antropo}).eq("id",id)
-                setMsg("Dati aggiornati!")
-                setTimeout(()=>setMsg(""),3000)
-              }}>Salva dati</button>
+            <div style={{display:"flex",justifyContent:"flex-end",marginTop:"1rem"}}>
               <button className="btn-gold" onClick={salvaVisita} disabled={saving}>
-                <i className="ti ti-plus"></i> Salva come nuova visita
+                <i className="ti ti-plus"></i> {saving?"Salvando...":"Salva come nuova visita"}
               </button>
             </div>
             {visite.length > 0 && (
@@ -446,33 +441,68 @@ export default function SchedaCliente() {
 
       {tab === "progressi" && (
         <div>
-          <div className="card" style={{padding:"1.25rem",marginBottom:"1.25rem"}}>
-            <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Andamento peso</div>
-            {graficoData.length < 2 ? <div style={{textAlign:"center",padding:"2rem",fontSize:"12px",color:"var(--t2)"}}>Aggiungi almeno 2 misurazioni per vedere il grafico</div> :
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={graficoData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(201,168,76,0.1)" />
-                <XAxis dataKey="data" tick={{fontSize:10,fill:"var(--t2)"}} />
-                <YAxis tick={{fontSize:10,fill:"var(--t2)"}} />
-                <Tooltip contentStyle={{background:"var(--card)",border:".5px solid var(--gold-b)",borderRadius:"8px",fontSize:"11px"}} />
-                <Line type="monotone" dataKey="peso" stroke="#C9A84C" strokeWidth={2} dot={{fill:"#C9A84C",r:4}} name="Peso (kg)" />
-              </LineChart>
-            </ResponsiveContainer>}
-          </div>
-          <div className="card" style={{padding:"1.25rem"}}>
-            <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Composizione corporea</div>
-            {graficoData.length < 2 ? <div style={{textAlign:"center",padding:"2rem",fontSize:"12px",color:"var(--t2)"}}>Aggiungi almeno 2 misurazioni per vedere il grafico</div> :
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={graficoData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(201,168,76,0.1)" />
-                <XAxis dataKey="data" tick={{fontSize:10,fill:"var(--t2)"}} />
-                <YAxis tick={{fontSize:10,fill:"var(--t2)"}} />
-                <Tooltip contentStyle={{background:"var(--card)",border:".5px solid var(--gold-b)",borderRadius:"8px",fontSize:"11px"}} />
-                <Line type="monotone" dataKey="grasso" stroke="#B87A7A" strokeWidth={2} dot={{fill:"#B87A7A",r:4}} name="Grasso (%)" />
-                <Line type="monotone" dataKey="muscolo" stroke="#7AB87A" strokeWidth={2} dot={{fill:"#7AB87A",r:4}} name="Muscolo (%)" />
-              </LineChart>
-            </ResponsiveContainer>}
-          </div>
+          {visite.length === 0 ? (
+            <div className="card" style={{padding:"3rem",textAlign:"center"}}>
+              <i className="ti ti-chart-line" style={{fontSize:"36px",color:"var(--t3)",display:"block",marginBottom:"12px"}}></i>
+              <div style={{fontSize:"13px",color:"var(--t2)"}}>Salva almeno 2 visite per vedere i progressi</div>
+            </div>
+          ) : (
+            <div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"12px",marginBottom:"1.25rem"}}>
+                {[
+                  {label:"Peso attuale",val:(visite[0]?.peso||"—")+" kg",delta:visite.length>1?((visite[0]?.peso-visite[visite.length-1]?.peso)||0).toFixed(1)+" kg":null},
+                  {label:"BMI",val:visite[0]?.bmi||"—",delta:null},
+                  {label:"Massa grassa",val:(visite[0]?.percentuale_grasso||"—")+"%",delta:visite.length>1?((visite[0]?.percentuale_grasso-visite[visite.length-1]?.percentuale_grasso)||0).toFixed(1)+"%":null},
+                  {label:"Visite totali",val:visite.length,delta:null}
+                ].map(b=>(
+                  <div key={b.label} className="stat-card">
+                    <div className="stat-label">{b.label}</div>
+                    <div className="stat-val">{b.val}</div>
+                    {b.delta && <div className="stat-delta warn">{b.delta} dal inizio</div>}
+                  </div>
+                ))}
+              </div>
+              <div className="card" style={{padding:"1.25rem",marginBottom:"1.25rem"}}>
+                <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Andamento peso</div>
+                {visite.length < 2 ? <div style={{textAlign:"center",padding:"2rem",fontSize:"12px",color:"var(--t2)"}}>Aggiungi almeno 2 visite</div> :
+                <ResponsiveContainer width="100%" height={200}>
+                  <LineChart data={[...visite].reverse().map(v=>({data:new Date(v.data).toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}),peso:v.peso,grasso:v.percentuale_grasso,bmi:v.bmi}))}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(201,168,76,0.1)" />
+                    <XAxis dataKey="data" tick={{fontSize:10,fill:"var(--t2)"}} />
+                    <YAxis tick={{fontSize:10,fill:"var(--t2)"}} />
+                    <Tooltip contentStyle={{background:"var(--card)",border:".5px solid var(--gold-b)",borderRadius:"8px",fontSize:"11px"}} />
+                    <Line type="monotone" dataKey="peso" stroke="#C9A84C" strokeWidth={2} dot={{fill:"#C9A84C",r:4}} name="Peso (kg)" />
+                  </LineChart>
+                </ResponsiveContainer>}
+              </div>
+              <div className="card" style={{padding:"1.25rem",marginBottom:"1.25rem"}}>
+                <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Massa grassa %</div>
+                {visite.length < 2 ? <div style={{textAlign:"center",padding:"2rem",fontSize:"12px",color:"var(--t2)"}}>Aggiungi almeno 2 visite</div> :
+                <ResponsiveContainer width="100%" height={200}>
+                  <LineChart data={[...visite].reverse().map(v=>({data:new Date(v.data).toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}),grasso:v.percentuale_grasso,bmi:v.bmi}))}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(201,168,76,0.1)" />
+                    <XAxis dataKey="data" tick={{fontSize:10,fill:"var(--t2)"}} />
+                    <YAxis tick={{fontSize:10,fill:"var(--t2)"}} />
+                    <Tooltip contentStyle={{background:"var(--card)",border:".5px solid var(--gold-b)",borderRadius:"8px",fontSize:"11px"}} />
+                    <Line type="monotone" dataKey="grasso" stroke="#B87A7A" strokeWidth={2} dot={{fill:"#B87A7A",r:4}} name="Grasso (%)" />
+                    <Line type="monotone" dataKey="bmi" stroke="#7AB87A" strokeWidth={2} dot={{fill:"#7AB87A",r:4}} name="BMI" />
+                  </LineChart>
+                </ResponsiveContainer>}
+              </div>
+              <div className="card">
+                <div className="card-hdr"><span className="card-title">Storico visite</span></div>
+                {visite.map((v,i)=>(
+                  <div key={v.id} style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr 1fr",gap:"10px",padding:"10px 1.1rem",borderBottom:i<visite.length-1?".5px solid var(--bord)":"none",fontSize:"12px",alignItems:"center"}}>
+                    <div style={{color:"var(--t2)"}}>{new Date(v.data).toLocaleDateString("it-IT")}</div>
+                    <div><span style={{color:"var(--gold)",fontWeight:500}}>{v.peso||"—"}</span> kg</div>
+                    <div>BMI <span style={{color:"var(--gold)"}}>{v.bmi||"—"}</span></div>
+                    <div>Grasso <span style={{color:"var(--gold)"}}>{v.percentuale_grasso||"—"}%</span></div>
+                    <div style={{color:"var(--t2)",fontSize:"11px"}}>Vita {v.vita||"—"} cm</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
