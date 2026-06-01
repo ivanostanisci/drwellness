@@ -96,11 +96,11 @@ export default function Clienti() {
                 {c.nome[0]}{c.cognome[0]}
               </div>
               <div>
-                <div style={{fontWeight:500,color:'var(--t1)'}}>{c.nome} {c.cognome}</div>
+                <div style={{fontWeight:600,color:'var(--gold)'}}>{c.nome} {c.cognome}</div>
                 <div style={{fontSize:'10px',color:'var(--t2)'}}>{c.email}</div>
               </div>
             </div>
-            <span style={{fontSize:'13px',fontWeight:600,color:'var(--gold)'}}>{c.telefono || '—'}</span>
+            <span style={{fontSize:'12px',color:'var(--gold)'}}>{c.telefono || '—'}</span>
             <span style={{fontSize:'12px',color:'var(--gold)'}}>{c.peso_iniziale ? c.peso_iniziale+' kg' : '—'}</span>
             <span style={{fontSize:'12px',color:'var(--gold)',textTransform:'capitalize'}}>{c.obiettivo || '—'}</span>
             <span style={{fontSize:'12px',color:'var(--gold)'}}>{c.calorie_target ? c.calorie_target+' kcal' : '—'}</span>
