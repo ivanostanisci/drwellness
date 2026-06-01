@@ -10,6 +10,7 @@ export default function SchedaCliente() {
   const navigate = useNavigate()
   const [cliente, setCliente] = useState(null)
   const [misurazioni, setMisurazioni] = useState([])
+  const [visite, setVisite] = useState([])
   const [autocheck, setAutocheck] = useState([])
   const [loading, setLoading] = useState(true)
   const [tab, setTab] = useState("anagrafica")
@@ -31,6 +32,8 @@ export default function SchedaCliente() {
   async function fetchDati() {
     const { data: c } = await supabase.from("clienti").select("*").eq("id", id).single()
     const { data: m } = await supabase.from("misurazioni").select("*").eq("cliente_id", id).order("data", { ascending: false })
+    const { data: v } = await supabase.from("visite").select("*").eq("cliente_id", id).order("data_visita", { ascending: true })
+    if (v) setVisite(v)
     const { data: a } = await supabase.from("autocheck").select("*").eq("cliente_id", id).order("created_at", { ascending: false })
     const { data: v } = await supabase.from("visite").select("*").eq("cliente_id", id).order("data", { ascending: false })
     if (v) setVisite(v)
@@ -177,7 +180,7 @@ export default function SchedaCliente() {
   const tabs = ["anagrafica","anamnesi","antropometrica","progressi","autocheck","alimentazione","allenamento"]
   const tabLabels = { anagrafica:"Anagrafica", anamnesi:"Anamnesi", antropometrica:"Visita", progressi:"Progressi", autocheck:"Autocheck", alimentazione:"Alimentazione", allenamento:"Allenamento" }
 
-  const graficoData = [...misurazioni].reverse().map(m => ({ data: new Date(m.data).toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}), peso: m.peso, grasso: m.massa_grassa, muscolo: m.massa_muscolare }))
+  const graficoData = visite.map(v => ({ data: new Date(v.data_visita).toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}), peso: v.peso, grasso: v.percentuale_grasso, bmi: v.bmi }))
 
   if (loading) return <Layout><div style={{padding:"2rem",textAlign:"center",color:"var(--t2)"}}>Caricamento...</div></Layout>
   if (!cliente) return <Layout><div style={{padding:"2rem",textAlign:"center",color:"var(--t2)"}}>Cliente non trovato</div></Layout>
