@@ -213,7 +213,7 @@ export default function SchedaCliente() {
 
       <div style={{display:"flex",gap:"4px",marginBottom:"1.25rem",background:"var(--card)",border:".5px solid var(--bord)",borderRadius:"10px",padding:"4px",overflowX:"auto"}}>
         {tabs.map(t => (
-          <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"7px 8px",borderRadius:"7px",fontSize:"10px",fontWeight:500,cursor:"pointer",border:"none",background:tab===t?"var(--gold)":"transparent",color:tab===t?"#0A0A0A":"var(--t2)",transition:"all .15s",whiteSpace:"nowrap",minWidth:"70px"}}>
+          <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"7px 8px",borderRadius:"7px",fontSize:"13px",fontWeight:700,cursor:"pointer",border:"none",background:tab===t?"var(--gold)":"transparent",color:tab===t?"#0A0A0A":"var(--t2)",transition:"all .15s",whiteSpace:"nowrap",minWidth:"70px"}}>
             {tabLabels[t]}
           </button>
         ))}
