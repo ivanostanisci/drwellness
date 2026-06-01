@@ -66,7 +66,7 @@ export default function Clienti() {
 
       {/* TABELLA */}
       <div className="card">
-        <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr 1fr 70px',gap:'10px',padding:'7px 1.1rem',background:'var(--card2)',fontSize:'10px',color:'var(--t3)',fontWeight:600,textTransform:'uppercase',letterSpacing:'.06em'}}>
+        <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr 1fr 70px',gap:'10px',padding:'10px 1.1rem',background:'var(--card2)',fontSize:'13px',color:'var(--gold)',fontWeight:700,textTransform:'uppercase',letterSpacing:'.06em'}}>
           <span>Cliente</span><span>Contatto</span><span>Peso</span><span>Obiettivo</span><span>Calorie</span><span></span>
         </div>
 
@@ -100,10 +100,10 @@ export default function Clienti() {
                 <div style={{fontSize:'10px',color:'var(--t2)'}}>{c.email}</div>
               </div>
             </div>
-            <span style={{fontSize:'13px',fontWeight:600,color:'var(--t1)'}}>{c.telefono || '—'}</span>
-            <span style={{fontSize:'13px',fontWeight:600,color:'var(--t1)'}}>{c.peso_iniziale ? c.peso_iniziale+' kg' : '—'}</span>
-            <span style={{fontSize:'13px',fontWeight:600,color:'var(--t1)',textTransform:'capitalize'}}>{c.obiettivo || '—'}</span>
-            <span style={{fontSize:'13px',fontWeight:600,color:'var(--t1)'}}>{c.calorie_target ? c.calorie_target+' kcal' : '—'}</span>
+            <span style={{fontSize:'13px',fontWeight:600,color:'var(--gold)'}}>{c.telefono || '—'}</span>
+            <span style={{fontSize:'13px',fontWeight:600,color:'var(--gold)'}}>{c.peso_iniziale ? c.peso_iniziale+' kg' : '—'}</span>
+            <span style={{fontSize:'13px',fontWeight:600,color:'var(--gold)',textTransform:'capitalize'}}>{c.obiettivo || '—'}</span>
+            <span style={{fontSize:'13px',fontWeight:600,color:'var(--gold)'}}>{c.calorie_target ? c.calorie_target+' kcal' : '—'}</span>
             <span style={{color:'var(--gold)',fontSize:'11px',cursor:'pointer'}} onClick={()=>navigate('/clienti/'+c.id)}>Apri →</span>
                 <span style={{color:'var(--t3)',fontSize:'11px',cursor:'pointer',marginLeft:'8px'}} onClick={async()=>{if(window.confirm('Eliminare '+c.nome+' '+c.cognome+'?')){await supabase.from('clienti').delete().eq('id',c.id);fetchClienti()}}}>Elimina</span>
           </div>
