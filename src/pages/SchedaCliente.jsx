@@ -34,8 +34,8 @@ export default function SchedaCliente() {
   async function fetchDati() {
     const { data: c } = await supabase.from("clienti").select("*").eq("id", id).single()
     const { data: m } = await supabase.from("misurazioni").select("*").eq("cliente_id", id).order("data", { ascending: false })
-    const { data: v } = await supabase.from("visite").select("*").eq("cliente_id", id).order("data_visita", { ascending: true })
-    if (v) setVisite(v)
+    const { data: visiteData } = await supabase.from("visite").select("*").eq("cliente_id", id).order("data_visita", { ascending: true })
+    if (visiteData) setVisite(visiteData)
     const { data: a } = await supabase.from("autocheck").select("*").eq("cliente_id", id).order("created_at", { ascending: false })
     const { data: v } = await supabase.from("visite").select("*").eq("cliente_id", id).order("data", { ascending: false })
     if (v) setVisite(v)
