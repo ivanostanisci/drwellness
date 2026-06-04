@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import PianoAlimentarePDF from "../components/PianoAlimentarePDF"
+import SchedaAllenamentoPDF from "../components/SchedaAllenamentoPDF"
 import { useParams, useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
 import { supabase } from "../lib/supabase"
@@ -590,6 +591,7 @@ export default function SchedaCliente() {
                   setTimeout(()=>setMsg(""),3000)
                 }}><i className="ti ti-device-floppy"></i> Salva scheda</button>
               </div>
+              <SchedaAllenamentoPDF scheda={schedaAI} cliente={cliente} />
             </div>
           )}
         </div>
