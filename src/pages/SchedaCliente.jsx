@@ -580,7 +580,7 @@ export default function SchedaCliente() {
               <div style={{fontSize:"13px",fontWeight:600,color:"var(--t1)",marginBottom:"1rem"}}>Scheda allenamento</div>
               <div style={{marginBottom:"1rem"}}>
                 <label className="flabel">Modifica la scheda prima di salvare</label>
-                <textarea value={schedaAI} onChange={e=>setSchedaAI(e.target.value)}
+                <textarea value={schedaAI.replace(/\*\*/g,"").replace(/^###\s*/gm,"").replace(/^##\s*/gm,"").replace(/^#\s*/gm,"").replace(/^---$/gm,"")} onChange={e=>setSchedaAI(e.target.value)}
                   style={{width:"100%",background:"#0A0A0A",border:".5px solid var(--gold-b)",borderRadius:"8px",padding:"1.25rem",fontSize:"13px",color:"var(--gold)",lineHeight:2,resize:"vertical",minHeight:"400px",outline:"none",fontFamily:"DM Sans,sans-serif",fontWeight:500}} />
               </div>
               <div style={{display:"flex",gap:"8px",justifyContent:"flex-end"}}>
