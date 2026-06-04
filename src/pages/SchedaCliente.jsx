@@ -45,7 +45,7 @@ export default function SchedaCliente() {
       setAntropro(prev => ({...prev, peso: c.peso_iniziale||"", altezza: c.altezza||"", ...(c.antropometrica||{})}))
       if (c.anamnesi) setAnamnesi(c.anamnesi)
       if (c.piano_alimentare) setPianoAI(c.piano_alimentare)
-      if (c.scheda_allenamento) setSchedaAI(c.scheda_allenamento)
+      if (c.scheda_allenamento) setSchedaAI(c.scheda_allenamento.replace(/\*\*/g,"").replace(/^###\s*/gm,"").replace(/^##\s*/gm,"").replace(/^#\s*/gm,"").replace(/^---$/gm,"").trim())
     }
     if (m) setMisurazioni(m)
     if (a) setAutocheck(a)
@@ -590,6 +590,7 @@ export default function SchedaCliente() {
                   setMsg("Scheda salvata!")
                   setTimeout(()=>setMsg(""),3000)
                 }}><i className="ti ti-device-floppy"></i> Salva scheda</button>
+                {msg === "Scheda salvata!" && <span style={{fontSize:"12px",color:"var(--green)",fontWeight:500}}>✓ Scheda salvata!</span>}
               </div>
               <SchedaAllenamentoPDF scheda={schedaAI} cliente={cliente} />
             </div>
