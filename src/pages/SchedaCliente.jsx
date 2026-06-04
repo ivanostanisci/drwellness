@@ -482,14 +482,7 @@ export default function SchedaCliente() {
             </div>
           ) : (
             <div>
-              <div style={{marginBottom:"1rem"}}>
-              <label style={{fontSize:"11px",color:"var(--t2)",marginBottom:"6px",display:"block"}}>Modifica il piano prima di salvarlo</label>
-              <textarea 
-                value={pianoAI.replace(/\*\*/g,"").replace(/^###\s*/gm,"").replace(/^##\s*/gm,"").replace(/^#\s*/gm,"").replace(/^---$/gm,"")} 
-                onChange={e=>setPianoAI(e.target.value)}
-                style={{width:"100%",background:"var(--card2)",border:".5px solid var(--bord)",borderRadius:"8px",padding:"1rem",fontSize:"11px",color:"var(--t1)",lineHeight:1.8,resize:"vertical",minHeight:"400px",outline:"none",fontFamily:"DM Sans,sans-serif"}}
-              />
-            </div>
+              <PianoVisuale piano={pianoAI} onModifica={setPianoAI} />
             <div style={{display:"flex",gap:"8px",justifyContent:"flex-end",marginBottom:"1rem"}}>
               <button className="btn-outline" onClick={()=>setPianoAI("")}>Rigenera</button>
               <button className="btn-gold" onClick={async()=>{
