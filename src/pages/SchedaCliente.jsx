@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import PianoAlimentarePDF from "../components/PianoAlimentarePDF"
+import PianoVisuale from "../components/PianoVisuale"
 import SchedaAllenamentoPDF from "../components/SchedaAllenamentoPDF"
 import { useParams, useNavigate } from "react-router-dom"
 import Layout from "../components/Layout"
