@@ -10,7 +10,6 @@ export default function SchedaCliente() {
   const navigate = useNavigate()
   const [cliente, setCliente] = useState(null)
   const [misurazioni, setMisurazioni] = useState([])
-  const [visite, setVisite] = useState([])
   const [autocheck, setAutocheck] = useState([])
   const [loading, setLoading] = useState(true)
   const [tab, setTab] = useState("anagrafica")
