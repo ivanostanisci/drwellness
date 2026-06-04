@@ -19,6 +19,9 @@ export default function SchedaCliente() {
   const [editing, setEditing] = useState(false)
   const [editForm, setEditForm] = useState({})
   const [generando, setGenerando] = useState(false)
+  const [schedaAI, setSchedaAI] = useState("")
+  const [generandoScheda, setGenerandoScheda] = useState(false)
+  const [schedaForm, setSchedaForm] = useState({ luogo:"palestra", tipo:"Ipertrofia", livello:"Intermedio", giorni:"3", attrezzatura:"", note:"" })
   const [pianoAI, setPianoAI] = useState("")
 
   const [anamnesi, setAnamnesi] = useState({ patologie:"", farmaci:"", allergie:"", intolleranze:"", fumo:"no", alcol:"no", attivita:"sedentario", ore_sonno:"", stress:"3", note:"" })
@@ -42,6 +45,7 @@ export default function SchedaCliente() {
       setAntropro(prev => ({...prev, peso: c.peso_iniziale||"", altezza: c.altezza||"", ...(c.antropometrica||{})}))
       if (c.anamnesi) setAnamnesi(c.anamnesi)
       if (c.piano_alimentare) setPianoAI(c.piano_alimentare)
+      if (c.scheda_allenamento) setSchedaAI(c.scheda_allenamento)
     }
     if (m) setMisurazioni(m)
     if (a) setAutocheck(a)
@@ -132,6 +136,34 @@ export default function SchedaCliente() {
     setMsg("Misurazione salvata!")
     setSaving(false)
     setTimeout(() => setMsg(""), 3000)
+  }
+
+  async function generaScheda() {
+    setGenerandoScheda(true)
+    try {
+      const prompt = "Sei il Personal Trainer Dr. Wellness. Crea una scheda di allenamento COMPLETA e DETTAGLIATA per:\n" +
+        "Nome: " + cliente.nome + " " + cliente.cognome + "\n" +
+        "Obiettivo: " + (cliente.obiettivo||"N/D") + "\n" +
+        "Luogo: " + schedaForm.luogo + "\n" +
+        "Tipo allenamento: " + schedaForm.tipo + "\n" +
+        "Livello: " + schedaForm.livello + "\n" +
+        "Giorni a settimana: " + schedaForm.giorni + "\n" +
+        "Attrezzatura: " + (schedaForm.attrezzatura||"standard palestra") + "\n" +
+        "Patologie: " + (anamnesi.patologie||"nessuna") + "\n" +
+        "Note: " + (schedaForm.note||"nessuna") + "\n\n" +
+        "GENERA:\n" +
+        "Per ogni giorno di allenamento includi: 1) Riscaldamento 2) Esercizi con serie x ripetizioni x peso/intensita 3) Recupero tra le serie 4) Defaticamento\n" +
+        "Usa i nomi dei giorni (es. LUNEDI, MERCOLEDI, VENERDI) e specifica muscoli target per ogni esercizio.\n" +
+        "Sii molto specifico e professionale."
+      const res = await fetch("https://pjojacqzpujdesxqqcnf.supabase.co/functions/v1/genera-piano", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqb2phY3F6cHVqZGVzeHFxY25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3Mjc2MjQsImV4cCI6MjA5NTMwMzYyNH0.cLygQqHlUtCi4esA0a_XcNRxOUL5Z5p5RdB60OmcZ8s" },
+        body: JSON.stringify({ model: "claude-sonnet-4-5", max_tokens: 4000, messages: [{ role: "user", content: prompt }] })
+      })
+      const data = await res.json()
+      if (data.content?.[0]?.text) setSchedaAI(data.content[0].text)
+    } catch(e) { setMsg("Errore: " + e.message) }
+    setGenerandoScheda(false)
   }
 
   async function generaPiano() {
@@ -473,10 +505,94 @@ export default function SchedaCliente() {
       )}
 
       {tab === "allenamento" && (
-        <div className="card" style={{padding:"2rem",textAlign:"center"}}>
-          <i className="ti ti-barbell" style={{fontSize:"36px",color:"var(--t3)",display:"block",marginBottom:"12px"}}></i>
-          <div style={{fontSize:"13px",color:"var(--t2)",marginBottom:"16px"}}>Scheda allenamento personalizzata</div>
-          <button className="btn-gold" style={{margin:"0 auto"}}>Crea scheda allenamento</button>
+        <div>
+          {!schedaAI ? (
+            <div className="card" style={{padding:"1.25rem"}}>
+              <div style={{fontSize:"13px",fontWeight:600,color:"var(--t1)",marginBottom:"1rem"}}>Genera scheda allenamento</div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px",marginBottom:"10px"}}>
+                <div><label className="flabel">Luogo allenamento</label>
+                  <select className="fselect" value={schedaForm.luogo} onChange={e=>setSchedaForm({...schedaForm,luogo:e.target.value})}>
+                    <option value="palestra">Palestra</option>
+                    <option value="casa">Casa</option>
+                    <option value="aperto">All aperto</option>
+                  </select>
+                </div>
+                <div><label className="flabel">Tipo di allenamento</label>
+                  <select className="fselect" value={schedaForm.tipo} onChange={e=>setSchedaForm({...schedaForm,tipo:e.target.value})}>
+                    <option value="Ipertrofia">Ipertrofia</option>
+                    <option value="Forza massimale">Forza massimale</option>
+                    <option value="Dimagrimento e tonificazione">Dimagrimento e tonificazione</option>
+                    <option value="Resistenza cardiovascolare">Resistenza cardiovascolare</option>
+                    <option value="Functional training">Functional training</option>
+                    <option value="Mobilita e flessibilita">Mobilità e flessibilità</option>
+                    <option value="Preparazione atletica">Preparazione atletica</option>
+                    <option value="Full body">Full body</option>
+                    <option value="Split upper lower">Split upper/lower</option>
+                  </select>
+                </div>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px",marginBottom:"10px"}}>
+                <div><label className="flabel">Livello</label>
+                  <select className="fselect" value={schedaForm.livello} onChange={e=>setSchedaForm({...schedaForm,livello:e.target.value})}>
+                    <option value="Principiante">Principiante</option>
+                    <option value="Intermedio">Intermedio</option>
+                    <option value="Avanzato">Avanzato</option>
+                  </select>
+                </div>
+                <div><label className="flabel">Giorni a settimana</label>
+                  <select className="fselect" value={schedaForm.giorni} onChange={e=>setSchedaForm({...schedaForm,giorni:e.target.value})}>
+                    <option value="2">2 giorni</option>
+                    <option value="3">3 giorni</option>
+                    <option value="4">4 giorni</option>
+                    <option value="5">5 giorni</option>
+                  </select>
+                </div>
+              </div>
+              {(schedaForm.luogo === "casa" || schedaForm.luogo === "aperto") && (
+                <div style={{marginBottom:"10px"}}>
+                  <label className="flabel">Attrezzatura disponibile</label>
+                  <div style={{display:"flex",flexWrap:"wrap",gap:"6px"}}>
+                    {["Manubri","Bilanciere","Elastici","Sbarra trazioni","Panca","Kettlebell","TRX","Nessuna"].map(a=>(
+                      <button key={a} onClick={()=>{
+                        const lista = schedaForm.attrezzatura ? schedaForm.attrezzatura.split(",").map(s=>s.trim()).filter(Boolean) : []
+                        const idx = lista.indexOf(a)
+                        if(idx>=0) lista.splice(idx,1); else lista.push(a)
+                        setSchedaForm({...schedaForm, attrezzatura: lista.join(", ")})
+                      }} style={{padding:"5px 10px",borderRadius:"20px",fontSize:"11px",cursor:"pointer",border:".5px solid",borderColor:schedaForm.attrezzatura?.includes(a)?"var(--gold-b)":"var(--bord)",background:schedaForm.attrezzatura?.includes(a)?"var(--gold-dim)":"transparent",color:schedaForm.attrezzatura?.includes(a)?"var(--gold)":"var(--t2)"}}>
+                        {a}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div style={{marginBottom:"1rem"}}>
+                <label className="flabel">Note aggiuntive</label>
+                <textarea className="finput" value={schedaForm.note} onChange={e=>setSchedaForm({...schedaForm,note:e.target.value})} placeholder="Limitazioni fisiche, preferenze, obiettivi specifici..." style={{height:"60px",resize:"none"}} />
+              </div>
+              <div style={{display:"flex",justifyContent:"flex-end"}}>
+                <button className="btn-gold" onClick={generaScheda} disabled={generandoScheda}>
+                  {generandoScheda ? "Generando scheda..." : "Genera scheda AI"}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="card" style={{padding:"1.25rem"}}>
+              <div style={{fontSize:"13px",fontWeight:600,color:"var(--t1)",marginBottom:"1rem"}}>Scheda allenamento</div>
+              <div style={{marginBottom:"1rem"}}>
+                <label className="flabel">Modifica la scheda prima di salvare</label>
+                <textarea value={schedaAI} onChange={e=>setSchedaAI(e.target.value)}
+                  style={{width:"100%",background:"#0A0A0A",border:".5px solid var(--gold-b)",borderRadius:"8px",padding:"1.25rem",fontSize:"13px",color:"var(--gold)",lineHeight:2,resize:"vertical",minHeight:"400px",outline:"none",fontFamily:"DM Sans,sans-serif",fontWeight:500}} />
+              </div>
+              <div style={{display:"flex",gap:"8px",justifyContent:"flex-end"}}>
+                <button className="btn-outline" onClick={()=>setSchedaAI("")}>Rigenera</button>
+                <button className="btn-gold" onClick={async()=>{
+                  await supabase.from("clienti").update({scheda_allenamento: schedaAI}).eq("id",id)
+                  setMsg("Scheda salvata!")
+                  setTimeout(()=>setMsg(""),3000)
+                }}><i className="ti ti-device-floppy"></i> Salva scheda</button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
