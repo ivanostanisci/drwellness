@@ -32,7 +32,8 @@ function FormCoaching() {
           antropometrica: { peso: form.peso, altezza: form.altezza, eta: form.eta, sesso: form.sesso, bmi }
         })
       })
-      const [cliente] = await res.json()
+      const data = await res.json()
+      const cliente = Array.isArray(data) ? data[0] : data
       
       // Genera codice accesso
       const codice = "DRW" + Math.floor(1000 + Math.random() * 9000)
