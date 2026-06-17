@@ -224,6 +224,11 @@ export default function Coaching() {
         .btn-wa { background:#25D366; color:#fff; border:none; border-radius:8px; padding:14px 32px; font-size:14px; font-weight:700; cursor:pointer; font-family:DM Sans,sans-serif; display:inline-flex; align-items:center; gap:8px; text-decoration:none; }
       `}</style>
 
+      <div style={{padding:"12px 20px",background:"#111",borderBottom:"1px solid rgba(201,168,76,0.1)"}}>
+        <a href="/dashboard" style={{color:"#C9A84C",fontSize:"13px",fontWeight:500,textDecoration:"none",display:"inline-flex",alignItems:"center",gap:"6px"}}>
+          ← Torna alla dashboard
+        </a>
+      </div>
       {/* HERO */}
       <div style={{background:"linear-gradient(180deg,#111 0%,#0A0A0A 100%)",padding:"60px 20px 80px",textAlign:"center",borderBottom:"1px solid rgba(201,168,76,0.2)"}}>
         <div style={{fontSize:"13px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"16px"}}>DR. WELLNESS — COACHING ONLINE</div>
