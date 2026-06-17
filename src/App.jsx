@@ -27,6 +27,7 @@ function App() {
         <Route path="/calendario" element={<Calendario />} />
         <Route path="/sessioni" element={<Sessioni />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/coaching" element={<Coaching />} />
       </Routes>
     </BrowserRouter>
   )
