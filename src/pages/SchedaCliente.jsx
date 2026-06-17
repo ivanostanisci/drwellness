@@ -586,6 +586,7 @@ export default function SchedaCliente() {
               </div>
               <SchedaAllenamentoPDF scheda={schedaAI} cliente={cliente} />
             </div>
+            </div>
           )}
         </div>
       )}
