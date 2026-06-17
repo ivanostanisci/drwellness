@@ -18,6 +18,7 @@ export default function Layout({ children }) {
         
         
         <span className="nav-sec">Online</span>
+        <NavLink to="/coaching" className="nav-link"><i className="ti ti-rocket"></i> Coaching Online</NavLink>
         <NavLink to="/online" className="nav-link"><i className="ti ti-world"></i> Pazienti Online <span className="nbadge">3</span></NavLink>
         <span className="nav-sec">AI Agent</span>
         <NavLink to="/alert" className="nav-link"><i className="ti ti-bell"></i> Alert <span className="nbadge">3</span></NavLink>
