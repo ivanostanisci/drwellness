@@ -1,110 +1,4 @@
 import { useState } from 'react'
-export default function Coaching() {
-  return (
-    <div style={{minHeight:"100vh",background:"#0A0A0A",fontFamily:"DM Sans,sans-serif",color:"#F0E6C8"}}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap');
-        * { box-sizing:border-box; margin:0; padding:0; }
-        .btn-gold { background:#C9A84C; color:#0A0A0A; border:none; border-radius:8px; padding:14px 32px; font-size:14px; font-weight:700; cursor:pointer; font-family:DM Sans,sans-serif; letter-spacing:0.05em; transition:all .2s; }
-        .btn-gold:hover { background:#E8C46A; transform:translateY(-1px); }
-        .btn-wa { background:#25D366; color:#fff; border:none; border-radius:8px; padding:14px 32px; font-size:14px; font-weight:700; cursor:pointer; font-family:DM Sans,sans-serif; display:inline-flex; align-items:center; gap:8px; text-decoration:none; }
-      `}</style>
-
-      {/* HERO */}
-      <div style={{background:"linear-gradient(180deg,#111 0%,#0A0A0A 100%)",padding:"60px 20px 80px",textAlign:"center",borderBottom:"1px solid rgba(201,168,76,0.2)"}}>
-        <div style={{fontSize:"13px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"16px"}}>DR. WELLNESS — COACHING ONLINE</div>
-        <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(32px,6vw,56px)",fontWeight:700,color:"#F0E6C8",lineHeight:1.1,marginBottom:"16px"}}>
-          Il tuo piano personalizzato<br/><span style={{color:"#C9A84C"}}>in pochi minuti</span>
-        </div>
-        <div style={{fontSize:"16px",color:"#8A7A5A",maxWidth:"500px",margin:"0 auto 32px",lineHeight:1.7}}>
-          Piano alimentare + scheda allenamento generati dall'AI sulla base dei tuoi dati, obiettivi e stile di vita.
-        </div>
-        <div style={{display:"inline-flex",alignItems:"center",gap:"12px",background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.3)",borderRadius:"12px",padding:"12px 24px",marginBottom:"32px"}}>
-          <div style={{fontSize:"32px",fontWeight:900,color:"#C9A84C"}}>€39,90</div>
-          <div style={{fontSize:"13px",color:"#8A7A5A",textAlign:"left"}}>Piano completo<br/>una tantum</div>
-        </div>
-        <div style={{display:"flex",gap:"12px",justifyContent:"center",flexWrap:"wrap"}}>
-          <button className="btn-gold" onClick={()=>document.getElementById("form").scrollIntoView({behavior:"smooth"})}>
-            Inizia ora →
-          </button>
-          <a href="https://wa.me/393279422703?text=Ciao%20Dr.%20Wellness!%20Vorrei%20info%20sul%20coaching%20online" target="_blank" className="btn-wa">
-            💬 WhatsApp
-          </a>
-        </div>
-      </div>
-
-      {/* COSA INCLUDE */}
-      <div style={{padding:"60px 20px",maxWidth:"800px",margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:"40px"}}>
-          <div style={{fontSize:"11px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"8px"}}>Cosa ricevi</div>
-          <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"32px",fontWeight:700,color:"#F0E6C8"}}>Tutto quello che ti serve</div>
-        </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"16px"}}>
-          {[
-            {icon:"🍽️",titolo:"Piano Alimentare 7 giorni",desc:"Calcolato sul tuo TDEE, obiettivo e intolleranze alimentari"},
-            {icon:"🏋️",titolo:"Scheda Allenamento",desc:"Personalizzata per il tuo livello, luogo e obiettivo sportivo"},
-            {icon:"📊",titolo:"Calcolo TDEE e Macros",desc:"Calorie e macronutrienti precisi per raggiungere il tuo obiettivo"},
-            {icon:"📱",titolo:"Area Cliente Personale",desc:"Accedi sempre ai tuoi piani, invia autocheck, monitora i progressi"},
-          ].map((item,i) => (
-            <div key={i} style={{background:"#111",border:"1px solid rgba(201,168,76,0.15)",borderRadius:"12px",padding:"20px"}}>
-              <div style={{fontSize:"32px",marginBottom:"10px"}}>{item.icon}</div>
-              <div style={{fontSize:"14px",fontWeight:600,color:"#F0E6C8",marginBottom:"6px"}}>{item.titolo}</div>
-              <div style={{fontSize:"12px",color:"#8A7A5A",lineHeight:1.6}}>{item.desc}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* COME FUNZIONA */}
-      <div style={{background:"#111",padding:"60px 20px",borderTop:"1px solid rgba(201,168,76,0.1)",borderBottom:"1px solid rgba(201,168,76,0.1)"}}>
-        <div style={{maxWidth:"700px",margin:"0 auto"}}>
-          <div style={{textAlign:"center",marginBottom:"40px"}}>
-            <div style={{fontSize:"11px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"8px"}}>Come funziona</div>
-            <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"32px",fontWeight:700,color:"#F0E6C8"}}>3 passi semplici</div>
-          </div>
-          <div style={{display:"flex",flexDirection:"column",gap:"24px"}}>
-            {[
-              {num:"01",titolo:"Compila il form",desc:"Inserisci i tuoi dati: obiettivo, peso, altezza, età, stile di vita, intolleranze alimentari"},
-              {num:"02",titolo:"L'AI elabora il tuo piano",desc:"Il nostro sistema genera un piano alimentare e una scheda allenamento completamente personalizzati"},
-              {num:"03",titolo:"Ricevi e inizia",desc:"Accedi alla tua area personale, scarica i PDF e inizia il tuo percorso verso il cambiamento"},
-            ].map((step,i) => (
-              <div key={i} style={{display:"flex",gap:"20px",alignItems:"flex-start"}}>
-                <div style={{width:"48px",height:"48px",borderRadius:"50%",background:"rgba(201,168,76,0.12)",border:"1px solid rgba(201,168,76,0.3)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"13px",fontWeight:700,color:"#C9A84C",flexShrink:0}}>
-                  {step.num}
-                </div>
-                <div>
-                  <div style={{fontSize:"15px",fontWeight:600,color:"#F0E6C8",marginBottom:"4px"}}>{step.titolo}</div>
-                  <div style={{fontSize:"13px",color:"#8A7A5A",lineHeight:1.6}}>{step.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* FORM */}
-      <div id="form" style={{padding:"60px 20px",maxWidth:"600px",margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:"40px"}}>
-          <div style={{fontSize:"11px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"8px"}}>Inizia ora</div>
-          <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"32px",fontWeight:700,color:"#F0E6C8",marginBottom:"8px"}}>Crea il tuo piano</div>
-          <div style={{fontSize:"13px",color:"#8A7A5A"}}>Compila i dati e ricevi il tuo piano personalizzato</div>
-        </div>
-        <div style={{background:"#111",border:"1px solid rgba(201,168,76,0.2)",borderRadius:"16px",padding:"32px"}}>
-          <FormCoaching />
-        </div>
-      </div>
-
-      {/* FOOTER */}
-      <div style={{background:"#0A0A0A",borderTop:"1px solid rgba(201,168,76,0.1)",padding:"24px 20px",textAlign:"center"}}>
-        <div style={{fontSize:"16px",fontWeight:700,color:"#C9A84C",letterSpacing:"0.1em",marginBottom:"4px"}}>DR. WELLNESS</div>
-        <div style={{fontSize:"11px",color:"#4A4030"}}>Personal Trainer & Nutrizionista · P.IVA in possesso</div>
-        <div style={{marginTop:"12px",display:"flex",gap:"12px",justifyContent:"center"}}>
-          <a href="https://wa.me/393279422703" target="_blank" style={{fontSize:"12px",color:"#25D366",textDecoration:"none"}}>💬 WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 function FormCoaching() {
   const [step, setStep] = useState(1)
@@ -314,6 +208,113 @@ function FormCoaching() {
             {loading ? "Creando il tuo piano... ⏳" : "Ottieni il tuo piano — €39,90 →"}
           </button>
         )}
+      </div>
+    </div>
+  )
+}
+
+export default function Coaching() {
+  return (
+    <div style={{minHeight:"100vh",background:"#0A0A0A",fontFamily:"DM Sans,sans-serif",color:"#F0E6C8"}}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap');
+        * { box-sizing:border-box; margin:0; padding:0; }
+        .btn-gold { background:#C9A84C; color:#0A0A0A; border:none; border-radius:8px; padding:14px 32px; font-size:14px; font-weight:700; cursor:pointer; font-family:DM Sans,sans-serif; letter-spacing:0.05em; transition:all .2s; }
+        .btn-gold:hover { background:#E8C46A; transform:translateY(-1px); }
+        .btn-wa { background:#25D366; color:#fff; border:none; border-radius:8px; padding:14px 32px; font-size:14px; font-weight:700; cursor:pointer; font-family:DM Sans,sans-serif; display:inline-flex; align-items:center; gap:8px; text-decoration:none; }
+      `}</style>
+
+      {/* HERO */}
+      <div style={{background:"linear-gradient(180deg,#111 0%,#0A0A0A 100%)",padding:"60px 20px 80px",textAlign:"center",borderBottom:"1px solid rgba(201,168,76,0.2)"}}>
+        <div style={{fontSize:"13px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"16px"}}>DR. WELLNESS — COACHING ONLINE</div>
+        <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"clamp(32px,6vw,56px)",fontWeight:700,color:"#F0E6C8",lineHeight:1.1,marginBottom:"16px"}}>
+          Il tuo piano personalizzato<br/><span style={{color:"#C9A84C"}}>in pochi minuti</span>
+        </div>
+        <div style={{fontSize:"16px",color:"#8A7A5A",maxWidth:"500px",margin:"0 auto 32px",lineHeight:1.7}}>
+          Piano alimentare + scheda allenamento generati dall'AI sulla base dei tuoi dati, obiettivi e stile di vita.
+        </div>
+        <div style={{display:"inline-flex",alignItems:"center",gap:"12px",background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.3)",borderRadius:"12px",padding:"12px 24px",marginBottom:"32px"}}>
+          <div style={{fontSize:"32px",fontWeight:900,color:"#C9A84C"}}>€39,90</div>
+          <div style={{fontSize:"13px",color:"#8A7A5A",textAlign:"left"}}>Piano completo<br/>una tantum</div>
+        </div>
+        <div style={{display:"flex",gap:"12px",justifyContent:"center",flexWrap:"wrap"}}>
+          <button className="btn-gold" onClick={()=>document.getElementById("form").scrollIntoView({behavior:"smooth"})}>
+            Inizia ora →
+          </button>
+          <a href="https://wa.me/393279422703?text=Ciao%20Dr.%20Wellness!%20Vorrei%20info%20sul%20coaching%20online" target="_blank" className="btn-wa">
+            💬 WhatsApp
+          </a>
+        </div>
+      </div>
+
+      {/* COSA INCLUDE */}
+      <div style={{padding:"60px 20px",maxWidth:"800px",margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:"40px"}}>
+          <div style={{fontSize:"11px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"8px"}}>Cosa ricevi</div>
+          <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"32px",fontWeight:700,color:"#F0E6C8"}}>Tutto quello che ti serve</div>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"16px"}}>
+          {[
+            {icon:"🍽️",titolo:"Piano Alimentare 7 giorni",desc:"Calcolato sul tuo TDEE, obiettivo e intolleranze alimentari"},
+            {icon:"🏋️",titolo:"Scheda Allenamento",desc:"Personalizzata per il tuo livello, luogo e obiettivo sportivo"},
+            {icon:"📊",titolo:"Calcolo TDEE e Macros",desc:"Calorie e macronutrienti precisi per raggiungere il tuo obiettivo"},
+            {icon:"📱",titolo:"Area Cliente Personale",desc:"Accedi sempre ai tuoi piani, invia autocheck, monitora i progressi"},
+          ].map((item,i) => (
+            <div key={i} style={{background:"#111",border:"1px solid rgba(201,168,76,0.15)",borderRadius:"12px",padding:"20px"}}>
+              <div style={{fontSize:"32px",marginBottom:"10px"}}>{item.icon}</div>
+              <div style={{fontSize:"14px",fontWeight:600,color:"#F0E6C8",marginBottom:"6px"}}>{item.titolo}</div>
+              <div style={{fontSize:"12px",color:"#8A7A5A",lineHeight:1.6}}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* COME FUNZIONA */}
+      <div style={{background:"#111",padding:"60px 20px",borderTop:"1px solid rgba(201,168,76,0.1)",borderBottom:"1px solid rgba(201,168,76,0.1)"}}>
+        <div style={{maxWidth:"700px",margin:"0 auto"}}>
+          <div style={{textAlign:"center",marginBottom:"40px"}}>
+            <div style={{fontSize:"11px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"8px"}}>Come funziona</div>
+            <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"32px",fontWeight:700,color:"#F0E6C8"}}>3 passi semplici</div>
+          </div>
+          <div style={{display:"flex",flexDirection:"column",gap:"24px"}}>
+            {[
+              {num:"01",titolo:"Compila il form",desc:"Inserisci i tuoi dati: obiettivo, peso, altezza, età, stile di vita, intolleranze alimentari"},
+              {num:"02",titolo:"L'AI elabora il tuo piano",desc:"Il nostro sistema genera un piano alimentare e una scheda allenamento completamente personalizzati"},
+              {num:"03",titolo:"Ricevi e inizia",desc:"Accedi alla tua area personale, scarica i PDF e inizia il tuo percorso verso il cambiamento"},
+            ].map((step,i) => (
+              <div key={i} style={{display:"flex",gap:"20px",alignItems:"flex-start"}}>
+                <div style={{width:"48px",height:"48px",borderRadius:"50%",background:"rgba(201,168,76,0.12)",border:"1px solid rgba(201,168,76,0.3)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"13px",fontWeight:700,color:"#C9A84C",flexShrink:0}}>
+                  {step.num}
+                </div>
+                <div>
+                  <div style={{fontSize:"15px",fontWeight:600,color:"#F0E6C8",marginBottom:"4px"}}>{step.titolo}</div>
+                  <div style={{fontSize:"13px",color:"#8A7A5A",lineHeight:1.6}}>{step.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* FORM */}
+      <div id="form" style={{padding:"60px 20px",maxWidth:"600px",margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:"40px"}}>
+          <div style={{fontSize:"11px",color:"#C9A84C",letterSpacing:"0.2em",textTransform:"uppercase",marginBottom:"8px"}}>Inizia ora</div>
+          <div style={{fontFamily:"Cormorant Garamond,serif",fontSize:"32px",fontWeight:700,color:"#F0E6C8",marginBottom:"8px"}}>Crea il tuo piano</div>
+          <div style={{fontSize:"13px",color:"#8A7A5A"}}>Compila i dati e ricevi il tuo piano personalizzato</div>
+        </div>
+        <div style={{background:"#111",border:"1px solid rgba(201,168,76,0.2)",borderRadius:"16px",padding:"32px"}}>
+          <FormCoaching />
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <div style={{background:"#0A0A0A",borderTop:"1px solid rgba(201,168,76,0.1)",padding:"24px 20px",textAlign:"center"}}>
+        <div style={{fontSize:"16px",fontWeight:700,color:"#C9A84C",letterSpacing:"0.1em",marginBottom:"4px"}}>DR. WELLNESS</div>
+        <div style={{fontSize:"11px",color:"#4A4030"}}>Personal Trainer & Nutrizionista · P.IVA in possesso</div>
+        <div style={{marginTop:"12px",display:"flex",gap:"12px",justifyContent:"center"}}>
+          <a href="https://wa.me/393279422703" target="_blank" style={{fontSize:"12px",color:"#25D366",textDecoration:"none"}}>💬 WhatsApp</a>
+        </div>
       </div>
     </div>
   )
