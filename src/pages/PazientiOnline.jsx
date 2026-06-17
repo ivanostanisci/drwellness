@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { supabase } from '../lib/supabase'
 
 export default function PazientiOnline() {
+  const navigate = useNavigate()
   const [pazienti, setPazienti] = useState([])
   const [ordini, setOrdini] = useState([])
   const [loading, setLoading] = useState(true)
