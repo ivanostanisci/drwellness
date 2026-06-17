@@ -78,18 +78,17 @@ function FormCoaching() {
     <div style={{textAlign:"center",padding:"2rem 0"}}>
       <div style={{fontSize:"48px",marginBottom:"16px"}}>🏆</div>
       <div style={{fontSize:"20px",fontWeight:700,color:"#F0E6C8",marginBottom:"8px"}}>Piano pronto!</div>
-      <div style={{fontSize:"13px",color:"#8A7A5A",marginBottom:"24px",lineHeight:1.7}}>
-        Il tuo piano personalizzato è stato creato.<br/>
-        Accedi alla tua area personale con:
+      <div style={{fontSize:"15px",fontWeight:600,color:"#F0E6C8",marginBottom:"8px"}}>Ciao {done.nome}!</div>
+      <div style={{fontSize:"13px",color:"#8A7A5A",marginBottom:"24px",lineHeight:1.8}}>
+        La tua richiesta è stata ricevuta con successo!<br/>
+        Il Dr. Wellness la elaborerà e ti contatterà entro <strong style={{color:"#C9A84C"}}>24 ore</strong> con il tuo piano personalizzato e le istruzioni per il pagamento.
       </div>
-      <div style={{background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.3)",borderRadius:"10px",padding:"16px",marginBottom:"24px"}}>
-        <div style={{fontSize:"12px",color:"#8A7A5A",marginBottom:"4px"}}>Email</div>
-        <div style={{fontSize:"14px",fontWeight:600,color:"#F0E6C8",marginBottom:"12px"}}>{done.email}</div>
-        <div style={{fontSize:"12px",color:"#8A7A5A",marginBottom:"4px"}}>Codice accesso</div>
-        <div style={{fontSize:"24px",fontWeight:900,color:"#C9A84C",letterSpacing:"0.15em"}}>{done.codice}</div>
+      <div style={{background:"rgba(201,168,76,0.08)",border:"1px solid rgba(201,168,76,0.2)",borderRadius:"10px",padding:"16px",marginBottom:"24px",fontSize:"12px",color:"#8A7A5A",lineHeight:1.7}}>
+        📧 Controlla la tua email: <strong style={{color:"#F0E6C8"}}>{done.email}</strong><br/>
+        📱 Oppure scrivici su WhatsApp per info immediate
       </div>
-      <a href="/area-cliente" style={{display:"inline-block",background:"#C9A84C",color:"#0A0A0A",border:"none",borderRadius:"8px",padding:"12px 32px",fontSize:"13px",fontWeight:700,textDecoration:"none",marginBottom:"12px"}}>
-        Accedi alla tua area →
+      <a href="https://wa.me/393279422703?text=Ciao!%20Ho%20appena%20inviato%20la%20mia%20richiesta%20di%20coaching%20online" target="_blank" style={{display:"inline-flex",alignItems:"center",gap:"8px",background:"#25D366",color:"#fff",border:"none",borderRadius:"8px",padding:"12px 24px",fontSize:"13px",fontWeight:700,textDecoration:"none"}}>
+        💬 Scrivici su WhatsApp
       </a>
     </div>
   )
@@ -205,7 +204,7 @@ function FormCoaching() {
           </button>
         ) : (
           <button onClick={invia} disabled={loading||!form.email} className="btn-gold" style={{marginLeft:"auto"}}>
-            {loading ? "Creando il tuo piano... ⏳" : "Ottieni il tuo piano — €39,90 →"}
+            {loading ? "Invio richiesta..." : "Richiedi il tuo piano — €39,90 →"}
           </button>
         )}
       </div>
