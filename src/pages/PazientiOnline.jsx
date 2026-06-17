@@ -86,7 +86,7 @@ Sii specifico, pratico e motivante. Usa un tono professionale ma caldo.`
 
     if(ce) { setMsg('Errore: '+ce.message); setSaving(false); return }
 
-    // 2. Genera piano AI
+    // 2. Genera piano
     const piano = await generaPianoAI({...form})
 
     // 3. Salva ordine con piano

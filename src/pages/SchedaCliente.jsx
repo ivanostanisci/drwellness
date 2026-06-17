@@ -477,7 +477,7 @@ export default function SchedaCliente() {
                 Clicca Genera per creare il piano alimentare personalizzato con AI. Per un piano più preciso compila prima Anamnesi e Visita.
               </div>
               <div style={{display:"flex",justifyContent:"flex-end"}}>
-                <button className="btn-gold" onClick={generaPiano} disabled={generando}>{generando?"Generando...":"Genera piano AI"}</button>
+                <button className="btn-gold" onClick={generaPiano} disabled={generando}>{generando?"Generando...":"Genera piano"}</button>
               </div>
             </div>
           ) : (
@@ -565,7 +565,7 @@ export default function SchedaCliente() {
               </div>
               <div style={{display:"flex",justifyContent:"flex-end"}}>
                 <button className="btn-gold" onClick={generaScheda} disabled={generandoScheda}>
-                  {generandoScheda ? "Generando scheda..." : "Genera scheda AI"}
+                  {generandoScheda ? "Generando scheda..." : "Genera scheda"}
                 </button>
               </div>
             </div>

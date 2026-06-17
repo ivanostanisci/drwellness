@@ -43,7 +43,7 @@ function FormCoaching() {
         body: JSON.stringify({codice_accesso: codice})
       })
 
-      // Genera piano AI
+      // Genera piano
       const promptAlim = "Sei il professionista del settore Dr. Wellness. Genera piano alimentare 7 giorni per: " + form.nome + " " + form.cognome + ", Peso: " + form.peso + "kg, Altezza: " + form.altezza + "cm, Età: " + form.eta + ", Sesso: " + form.sesso + ", Obiettivo: " + form.obiettivo + ", Attività: " + form.attivita + ", Intolleranze: " + (form.intolleranze||"nessuna") + ", Patologie: " + (form.patologie||"nessuna") + ". Includi TDEE, macros e 7 giorni completi con grammature."
       const resAlim = await fetch("https://pjojacqzpujdesxqqcnf.supabase.co/functions/v1/genera-piano", {
         method:"POST",
@@ -53,7 +53,7 @@ function FormCoaching() {
       const dataAlim = await resAlim.json()
       const piano = dataAlim.content?.[0]?.text || ""
 
-      // Genera scheda AI
+      // Genera scheda
       const promptAllen = "Sei il Personal Trainer Dr. Wellness. Crea scheda allenamento per: " + form.nome + ", Obiettivo: " + form.obiettivo + ", Luogo: " + form.luogo + ", Livello: intermedio, 3 giorni a settimana. Dettagliata con esercizi, serie, ripetizioni e recupero."
       const resAllen = await fetch("https://pjojacqzpujdesxqqcnf.supabase.co/functions/v1/genera-piano", {
         method:"POST",
