@@ -13,9 +13,11 @@ export default function Dashboard() {
   const [newApp, setNewApp] = useState({ ora:"09:00", cliente:"", tipo:"Allenamento" })
   const navigate = useNavigate()
 
+  const [richieste, setRichieste] = useState([])
   useEffect(() => {
     supabase.from("clienti").select("*").eq("attivo", true).then(({data}) => data && setClienti(data))
     supabase.from("autocheck").select("*").eq("letto_pt", false).then(({data}) => data && setAutocheck(data))
+    supabase.from("clienti").select("*").eq("attivo", false).eq("tipo", "online").then(({data}) => data && setRichieste(data))
   }, [])
 
   const oggi = new Date()
@@ -53,6 +55,21 @@ export default function Dashboard() {
         </div>
         <button className="btn-gold" onClick={()=>navigate("/clienti")}><i className="ti ti-plus"></i> Nuovo cliente</button>
       </div>
+
+      {richieste.length > 0 && (
+        <div onClick={()=>navigate("/online")} style={{background:"rgba(184,122,122,0.1)",border:"1px solid rgba(184,122,122,0.3)",borderRadius:"12px",padding:"14px 20px",marginBottom:"1.5rem",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}
+          onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(184,122,122,0.6)"}
+          onMouseLeave={e=>e.currentTarget.style.borderColor="rgba(184,122,122,0.3)"}>
+          <div style={{display:"flex",alignItems:"center",gap:"12px"}}>
+            <div style={{width:"36px",height:"36px",borderRadius:"50%",background:"rgba(184,122,122,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"16px"}}>🔔</div>
+            <div>
+              <div style={{fontSize:"13px",fontWeight:600,color:"#F0E6C8"}}>{richieste.length} nuova richiesta coaching in attesa</div>
+              <div style={{fontSize:"11px",color:"#8A7A5A",marginTop:"2px"}}>Clicca per elaborare il piano</div>
+            </div>
+          </div>
+          <div style={{fontSize:"12px",color:"#C9A84C",fontWeight:500}}>Elabora →</div>
+        </div>
+      )}
 
       <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"16px",marginBottom:"2rem"}}>
         {box.map(b=>(
