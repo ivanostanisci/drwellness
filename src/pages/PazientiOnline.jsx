@@ -198,7 +198,7 @@ Sii specifico, pratico e motivante. Usa un tono professionale ma caldo.`
               <span className={`pill ${ordine?.piano_ai?'p-ok':'p-warn'}`}>
                 {ordine?.piano_ai?'✓ Generato':'—'}
               </span>
-              <span style={{color:'var(--gold)',fontSize:'11px'}}>Apri →</span>
+              <span style={{color:'var(--gold)',fontSize:'11px',cursor:'pointer'}} onClick={()=>navigate('/clienti/'+p.id)}>Apri →</span>
             </div>
           )
         })}
