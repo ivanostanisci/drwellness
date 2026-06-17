@@ -43,7 +43,7 @@ function FormCoaching() {
       })
 
       // Genera piano AI
-      const promptAlim = "Sei il nutrizionista Dr. Wellness. Genera piano alimentare 7 giorni per: " + form.nome + " " + form.cognome + ", Peso: " + form.peso + "kg, Altezza: " + form.altezza + "cm, Età: " + form.eta + ", Sesso: " + form.sesso + ", Obiettivo: " + form.obiettivo + ", Attività: " + form.attivita + ", Intolleranze: " + (form.intolleranze||"nessuna") + ", Patologie: " + (form.patologie||"nessuna") + ". Includi TDEE, macros e 7 giorni completi con grammature."
+      const promptAlim = "Sei il professionista del settore Dr. Wellness. Genera piano alimentare 7 giorni per: " + form.nome + " " + form.cognome + ", Peso: " + form.peso + "kg, Altezza: " + form.altezza + "cm, Età: " + form.eta + ", Sesso: " + form.sesso + ", Obiettivo: " + form.obiettivo + ", Attività: " + form.attivita + ", Intolleranze: " + (form.intolleranze||"nessuna") + ", Patologie: " + (form.patologie||"nessuna") + ". Includi TDEE, macros e 7 giorni completi con grammature."
       const resAlim = await fetch("https://pjojacqzpujdesxqqcnf.supabase.co/functions/v1/genera-piano", {
         method:"POST",
         headers:{"Content-Type":"application/json","Authorization":"Bearer "+supabaseKey},
@@ -311,7 +311,7 @@ export default function Coaching() {
       {/* FOOTER */}
       <div style={{background:"#0A0A0A",borderTop:"1px solid rgba(201,168,76,0.1)",padding:"24px 20px",textAlign:"center"}}>
         <div style={{fontSize:"16px",fontWeight:700,color:"#C9A84C",letterSpacing:"0.1em",marginBottom:"4px"}}>DR. WELLNESS</div>
-        <div style={{fontSize:"11px",color:"#4A4030"}}>Personal Trainer & Nutrizionista · P.IVA in possesso</div>
+        <div style={{fontSize:"11px",color:"#4A4030"}}>Personal Trainer & Professionista del Benessere · P.IVA in possesso</div>
         <div style={{marginTop:"12px",display:"flex",gap:"12px",justifyContent:"center"}}>
           <a href="https://wa.me/393279422703" target="_blank" style={{fontSize:"12px",color:"#25D366",textDecoration:"none"}}>💬 WhatsApp</a>
         </div>
