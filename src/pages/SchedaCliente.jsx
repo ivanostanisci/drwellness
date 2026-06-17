@@ -476,9 +476,7 @@ export default function SchedaCliente() {
           <div style={{fontSize:"13px",fontWeight:500,color:"var(--t1)",marginBottom:"1rem"}}>Piano alimentare</div>
           {!pianoAI ? (
             <div>
-              <div style={{background:"var(--gold-dim)",border:".5px solid var(--gold-b)",borderRadius:"8px",padding:"1rem",marginBottom:"1rem",fontSize:"12px",color:"var(--t2)"}}>
-                Clicca Genera per creare il piano alimentare personalizzato con AI. Per un piano più preciso compila prima Anamnesi e Visita.
-              </div>
+              
               <div style={{display:"flex",justifyContent:"flex-end"}}>
                 <button className="btn-gold" onClick={generaPiano} disabled={generando}>{generando?"Generando...":"Genera piano"}</button>
               </div>
