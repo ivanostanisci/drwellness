@@ -9,6 +9,8 @@ function FormCoaching() {
     luogo:"palestra", intolleranze:"", patologie:"", note:""
   })
   const [loading, setLoading] = useState(false)
+  const [foto, setFoto] = useState({ fronte: null, retro: null, sx: null, dx: null })
+  const fotoRef = { fronte: null, retro: null, sx: null, dx: null }
   const [done, setDone] = useState(false)
   const ff = (k,v) => setForm(prev=>({...prev,[k]:v}))
 
@@ -116,7 +118,7 @@ function FormCoaching() {
     <div>
       {/* Steps */}
       <div style={{display:"flex",gap:"4px",marginBottom:"24px"}}>
-        {["Dati personali","Obiettivi","Salute"].map((s,i)=>(
+        {["Dati personali","Obiettivi","Salute","Foto"].map((s,i)=>(
           <div key={i} style={{flex:1,textAlign:"center"}}>
             <div style={{height:"3px",borderRadius:"2px",background:step>i?"#C9A84C":"rgba(201,168,76,0.2)",marginBottom:"6px"}}></div>
             <div style={{fontSize:"10px",color:step===i+1?"#C9A84C":"#4A4030"}}>{s}</div>
@@ -183,7 +185,43 @@ function FormCoaching() {
       )}
 
       {/* Prezzo */}
-      {step === 3 && (
+      {step === 4 && (
+        <div>
+          <div style={{fontSize:"13px",fontWeight:600,color:"#F0E6C8",marginBottom:"4px"}}>Foto del corpo</div>
+          <div style={{fontSize:"12px",color:"#8A7A5A",marginBottom:"16px",lineHeight:1.6}}>
+            Le foto ci permettono di personalizzare ancora di più il tuo piano. Scatta o carica 4 foto in costume: fronte, retro e lati. Saranno visibili solo al tuo coach.
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"12px",marginBottom:"16px"}}>
+            {[["fronte","Fronte"],["retro","Retro"],["sx","Lato Sinistro"],["dx","Lato Destro"]].map(([key,label])=>(
+              <div key={key} style={{background:"#161616",border:"1px solid rgba(201,168,76,0.15)",borderRadius:"10px",overflow:"hidden"}}>
+                <div style={{height:"120px",background:"#0A0A0A",display:"flex",alignItems:"center",justifyContent:"center",position:"relative"}}>
+                  {foto[key] 
+                    ? <img src={foto[key]} style={{width:"100%",height:"100%",objectFit:"cover"}} alt={label} />
+                    : <span style={{fontSize:"32px"}}>📷</span>
+                  }
+                  {foto[key] && <div style={{position:"absolute",top:"6px",right:"6px",background:"#25D366",borderRadius:"50%",width:"20px",height:"20px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"11px",color:"white"}}>✓</div>}
+                </div>
+                <div style={{padding:"8px"}}>
+                  <div style={{fontSize:"11px",color:foto[key]?"#25D366":"#8A7A5A",marginBottom:"6px",fontWeight:500}}>{label}</div>
+                  <label style={{display:"block",background:"rgba(201,168,76,0.1)",border:".5px solid rgba(201,168,76,0.3)",color:"#C9A84C",borderRadius:"6px",padding:"5px",fontSize:"10px",fontWeight:500,cursor:"pointer",textAlign:"center"}}>
+                    📁 Carica foto
+                    <input type="file" accept="image/*" style={{display:"none"}} onChange={e=>{
+                      const file = e.target.files[0]
+                      if(!file) return
+                      const reader = new FileReader()
+                      reader.onload = ev => setFoto(prev=>({...prev,[key]:ev.target.result}))
+                      reader.readAsDataURL(file)
+                    }} />
+                  </label>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{fontSize:"11px",color:"#4A4030",textAlign:"center"}}>{Object.values(foto).filter(Boolean).length}/4 foto caricate — puoi procedere anche senza</div>
+        </div>
+      )}
+
+      {step === 4 && (
         <div style={{background:"rgba(201,168,76,0.08)",border:"1px solid rgba(201,168,76,0.2)",borderRadius:"10px",padding:"14px",marginBottom:"16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
           <div>
             <div style={{fontSize:"12px",color:"#8A7A5A"}}>Piano completo personalizzato</div>
@@ -199,7 +237,7 @@ function FormCoaching() {
             ← Indietro
           </button>
         )}
-        {step < 3 ? (
+        {step < 4 ? (
           <button onClick={()=>setStep(step+1)} disabled={step===1&&(!form.nome||!form.email)} className="btn-gold" style={{marginLeft:"auto"}}>
             Avanti →
           </button>
