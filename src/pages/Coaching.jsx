@@ -231,7 +231,7 @@ export default function Coaching() {
           Il tuo piano personalizzato<br/><span style={{color:"#C9A84C"}}>in pochi minuti</span>
         </div>
         <div style={{fontSize:"16px",color:"#8A7A5A",maxWidth:"500px",margin:"0 auto 32px",lineHeight:1.7}}>
-          Piano alimentare + scheda allenamento generati dall'AI sulla base dei tuoi dati, obiettivi e stile di vita.
+          Ogni piano è studiato su misura per te: la mia esperienza come Personal Trainer e Professionista del Benessere, per darti risultati reali in meno tempo.
         </div>
         <div style={{display:"inline-flex",alignItems:"center",gap:"12px",background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.3)",borderRadius:"12px",padding:"12px 24px",marginBottom:"32px"}}>
           <div style={{fontSize:"32px",fontWeight:900,color:"#C9A84C"}}>€39,90</div>
