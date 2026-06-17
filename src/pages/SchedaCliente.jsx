@@ -210,7 +210,9 @@ export default function SchedaCliente() {
 
   const ff = (setter) => (k, v) => setter(prev => ({...prev, [k]: v}))
 
-  const tabs = ["anagrafica","anamnesi","antropometrica","progressi","autocheck","alimentazione","allenamento"]
+  const tabs = cliente?.tipo === "online" 
+    ? ["anagrafica","alimentazione","allenamento","autocheck","progressi"]
+    : ["anagrafica","anamnesi","antropometrica","progressi","autocheck","alimentazione","allenamento"]
   const tabLabels = { anagrafica:"Anagrafica", anamnesi:"Anamnesi", antropometrica:"Visita", progressi:"Progressi", autocheck:"Autocheck", alimentazione:"Alimentazione", allenamento:"Allenamento" }
 
   const graficoData = visite.map(v => ({ data: new Date(v.data_visita).toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"}), peso: v.peso, grasso: v.percentuale_grasso, bmi: v.bmi }))
